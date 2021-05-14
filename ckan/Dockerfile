@@ -17,6 +17,11 @@ RUN apk add --no-cache libffi-dev
 # Install CKAN dev requirements
 RUN pip install --no-binary :all: -r https://raw.githubusercontent.com/ckan/ckan/${GIT_BRANCH}/dev-requirements.txt
 
+
+# Install CKAN extensions
+RUN pip install -e git+https://github.com/ckan/ckanext-pdfview.git#egg=ckanext-pdfview && \
+    pip install -e git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages
+
 # Create folder for local extensions sources
 RUN mkdir $SRC_EXTENSIONS_DIR
 RUN mkdir $IAEA_EXTENSION_DIR
