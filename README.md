@@ -1,62 +1,22 @@
+[![CKAN](https://img.shields.io/badge/ckan-2.8-orange.svg?style=flat-square)](https://github.com/ckan/ckan)
 
-
-A custom CKAN extension for International Atomic Energy Agency (IAEA) data portal .
+A custom CKAN extension for International Atomic Energy Agency (IAEA) data portal.
 
 ## Requirements
 
-For example, you might want to mention here which versions of CKAN this
-extension works with.
+Make sure you have following tools installed on your machine:
+
+* Docker
+* Docker-compose
 
 ## Installation
-.. Add any additional install steps to the list below.
-   For example installing any non-Python dependencies or adding any required
-   config settings.
 
-To install ckanext-iaea:
+To build the images:
 
-1. Activate your CKAN virtual environment, for example::
+	`docker-compose build`
 
-     . /usr/lib/ckan/default/bin/activate
+To start the containers:
 
-2. Install the ckanext-iaea Python package into your virtual environment::
+	`docker-compose up`
 
-     pip install ckanext-iaea
-
-3. Add ``iaea`` to the ``ckan.plugins`` setting in your CKAN
-   config file (by default the config file is located at
-   ``/etc/ckan/default/production.ini``).
-
-4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu::
-
-     sudo service apache2 reload
-
-## Config Settings
-
-Document any optional config settings here. For example::
-
-    # The minimum number of hours to wait before re-checking a resource
-    # (optional, default: 24).
-    ckanext.iaea.some_setting = some_default_value
-
-## Development Installation
-
-To install ckanext-iaea for development, activate your CKAN virtualenv and
-do::
-
-    git clone https://github.com//ckanext-iaea.git
-    cd ckanext-iaea
-    python setup.py develop
-    pip install -r dev-requirements.txt
-
-## Running the Tests
-
-To run the tests, do::
-
-    nosetests --nologcapture --with-pylons=test.ini
-
-To run the tests and produce a coverage report, first make sure you have
-coverage installed in your virtualenv (``pip install coverage``) then run::
-
-    nosetests --nologcapture --with-pylons=test.ini --with-coverage --cover-package=ckanext.iaea --cover-inclusive --cover-erase --cover-tests
-
-
+Now you can start development of your extension.
