@@ -12,12 +12,20 @@ services:
     links:
       - db
       - solr
+      - datapusher
       - redis
     ports:
       - "0.0.0.0:${CKAN_PORT}:5000"
     volumes:
       - .:/srv/app/src_extensions/ckanext-iaea
       - ckan_storage:/var/lib/ckan
+
+  datapusher:
+    container_name: datapusher
+    build:
+      context: datapusher/
+    ports:
+      - "8800:8800"
 
   db:
     container_name: db
