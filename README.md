@@ -13,10 +13,10 @@ Make sure you have following tools installed on your machine:
 
 To build the images:
 
-	`docker-compose build`
+	docker-compose build
 
 To start the containers:
 
-	`docker-compose up`
+	docker-compose up
 
 Now you can start development of your extension.
