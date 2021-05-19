@@ -1,0 +1,16 @@
+{% set intro = g.site_intro_text %}
+
+<div class="module-content box">
+  <header>
+    {% if intro %}
+      {{ h.render_markdown(intro) }}
+    {% else %}
+      <h1 class="page-heading">{{ _("The home of the IAEA’s open data") }}</h1>
+      <p>
+        {% trans %}Here you will find data tools and resources to conduct research, 
+        develop web and mobile application design data visualization and <a href="#">more</a>. 
+        {% endtrans %}
+      </p>
+    {% endif %}
+  </header>
+</div>
