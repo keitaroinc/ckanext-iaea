@@ -1,7 +1,8 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 import ckan.logic as logic
- 
+from ckan.lib.plugins import DefaultTranslation
+
 
 def featured_group():
     try:
@@ -16,7 +17,8 @@ def featured_group():
         return {}
 
     
-class IaeaPlugin(plugins.SingletonPlugin):
+class IaeaPlugin(plugins.SingletonPlugin, DefaultTranslation):
+    plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITemplateHelpers, inherit=True)
 
