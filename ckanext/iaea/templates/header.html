@@ -1,5 +1,13 @@
 {% ckan_extends %}
 
+{% block header_logo %}
+  {% if g.site_logo %}
+    <a class="logo" href="{{ h.url_for('home.index') }}"><img src="{{ h.url_for_static_or_external(g.site_logo) }}" alt="{{ g.site_title }}" title="{{ g.site_title }}"/>
+      <span>{{ _('Open Data Platform') }}</span>
+    </a>
+  {% endif %}
+{% endblock %}
+
 {% block header_site_navigation %}
       <nav class="section navigation">
         <ul class="nav nav-pills">
