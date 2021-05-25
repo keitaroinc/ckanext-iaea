@@ -13,4 +13,14 @@
       </p>
     {% endif %}
   </header>
+
+  {% block home_image %}
+    <section class="featured media-overlay hidden-xs">
+      {% block home_image_content %}
+        <a class="media-image" href="#">
+          <img class="img-responsive" src="{{ h.url_for_static('/images/featured-image.jpeg') }}" alt="Placeholder" />
+        </a>
+      {% endblock %}
+    </section>
+  {% endblock %}
 </div>
