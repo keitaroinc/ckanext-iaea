@@ -1,0 +1,22 @@
+{% import 'macros/form.html' as form %}
+{% macro suggestedFilter(name, fields, suggested_filter_fields, label = '', error = '', options = '', classes = [], is_required = false) %}
+  {% set classes = (classes | list) %}
+  {%- set extra_html = caller() if caller -%}
+  {% call form.input_block(id or name, label or name, error, classes, extra_html = extra_html, is_required = is_required) %}
+  <div class="resource-view-field-filter">
+    <select multiple  id="suggested_filter_fields" name="suggested_filter_fields" >
+     {{suggested_filter_fields}}
+      {% for field in fields | reverse %}
+        <option value="{{ field }}"{% if field in suggested_filter_fields %} selected {% endif %}>{{ field }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  {% endcall %}
+{% endmacro %}
+
+{% set fields = h.resource_view_get_fields(resource) %}
+<div data-module = "resource-view-suggested-filter" data-module-resource-id = "{{ resource['id'] }}">
+  {{
+    suggestedFilter('Suggested filter fields', label=_('Suggested filter fields'), fields=fields, suggested_filter_fields=data.suggested_filter_fields, error=errors, classes=[""])
+  }}
+</div>
