@@ -17,24 +17,24 @@ def featured_group():
         return {}
 
 
-def view_rules_serializer(datapackage, view_dict):
+def suggested_filter_fields_serializer(datapackage, view_dict):
     suggested_filter_fields = view_dict.get('suggested_filter_fields', False)
-    schema = datapackage['resources'][0]['schema']['fields']
+    fields = datapackage['resources'][0]['schema']['fields']
     rules = []
     date  = {}
     if suggested_filter_fields: 
-        suggested_fields = [field for field in schema if field['name'] in suggested_filter_fields]
-        for fields in suggested_fields:
-            if fields['type'] in ['datetime', 'date']:
+        suggested_fields_with_type = [field for field in fields if field['name'] in suggested_filter_fields]
+        for field in suggested_fields_with_type:
+            if field['type'] in ['datetime', 'date']:
                 date = {
                     'startDate': None,
                     'endDate': None,
-                    'fieldName': fields['name']
+                    'fieldName': field['name']
                 }
             else:
                 rules.append({
                     'combinator': 'AND',
-                    'field': fields['name'],
+                    'field': field['name'],
                     'operator': '=',
                     'value': ''
                 })
@@ -60,7 +60,7 @@ class IaeaPlugin(plugins.SingletonPlugin, DefaultTranslation):
     def get_helpers(self):
         return {
             'featured_group': featured_group,
-            'view_rules_serializer': view_rules_serializer
+            'suggested_filter_fields_serializer': suggested_filter_fields_serializer
         }
         
     # IActions
