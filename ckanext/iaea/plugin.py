@@ -16,7 +16,35 @@ def featured_group():
     except (logic.NotFound, logic.ValidationError, logic.NotAuthorized):
         return {}
 
+
+def suggested_filter_fields_serializer(datapackage, view_dict):
+    suggested_filter_fields = view_dict.get('suggested_filter_fields', False)
+    fields = datapackage['resources'][0]['schema']['fields']
+    rules = []
+    date  = {}
+    if suggested_filter_fields: 
+        suggested_fields_with_type = [field for field in fields if field['name'] in suggested_filter_fields]
+        for field in suggested_fields_with_type:
+            if field['type'] in ['datetime', 'date']:
+                date = {
+                    'startDate': None,
+                    'endDate': None,
+                    'fieldName': field['name']
+                }
+            else:
+                rules.append({
+                    'combinator': 'AND',
+                    'field': field['name'],
+                    'operator': '=',
+                    'value': ''
+                })
+    if rules:
+        datapackage['resources'][0].update({'rules': rules})
+    if date:
+        datapackage['resources'][0].update({'date': date})
+    return datapackage
     
+
 class IaeaPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IConfigurer)
@@ -31,7 +59,8 @@ class IaeaPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     def get_helpers(self):
         return {
-            'featured_group': featured_group
+            'featured_group': featured_group,
+            'suggested_filter_fields_serializer': suggested_filter_fields_serializer
         }
         
     # IActions
