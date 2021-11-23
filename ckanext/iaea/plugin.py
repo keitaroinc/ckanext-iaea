@@ -19,7 +19,10 @@ def featured_group():
 
 def suggested_filter_fields_serializer(datapackage, view_dict):
     suggested_filter_fields = view_dict.get('suggested_filter_fields', False)
-    fields = datapackage['resources'][0]['schema']['fields']
+    try:
+        fields = datapackage['resources'][0]['schema']['fields']
+    except KeyError as e:
+        fields = []
     rules = []
     date  = {}
     if suggested_filter_fields: 
