@@ -1,3 +1,10 @@
-{% ckan_extends %} {% block styles %} {{ super() }}
-<link rel="stylesheet" href="/iaea.css" />
+
+{% ckan_extends %}
+
+{%- block styles %}
+    {% if h.is_rtl_language() %}
+        {% resource 'iaea/main-rtl-css' %}
+    {% else %}
+        {% resource 'iaea/main_css' %}
+    {% endif %}
 {% endblock %}
