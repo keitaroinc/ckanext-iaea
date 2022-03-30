@@ -13909,7 +13909,7 @@ a.tag:hover {
   list-style: none;
   min-height: 205px;
   padding-top: 15px;
-  background: #fbfbfb url("../../../base/images/bg.png");
+  background: #fbfbfb url("../../../../base/images/bg.png");
   border: 1px solid #ddd;
   border-width: 1px 0;
 }
@@ -14068,7 +14068,7 @@ a.tag:hover {
   list-style: none;
   min-height: 205px;
   padding-top: 15px;
-  background: #fbfbfb url("../../../base/images/bg.png");
+  background: #fbfbfb url("../../../../base/images/bg.png");
   border: 1px solid #ddd;
   border-width: 1px 0;
 }
@@ -14348,7 +14348,7 @@ a.tag:hover {
   top: 2px;
   width: 16px;
   height: 16px;
-  background-image: url("../../../base/images/sprite-ckan-icons.png");
+  background-image: url("../../../../base/images/sprite-ckan-icons.png");
   background-repeat: no-repeat;
   background-position: 16px 16px;
   content: "";
@@ -14420,7 +14420,7 @@ a.tag:hover {
   top: 2px;
   width: 16px;
   height: 16px;
-  background-image: url("../../../base/images/sprite-ckan-icons.png");
+  background-image: url("../../../../base/images/sprite-ckan-icons.png");
   background-repeat: no-repeat;
   background-position: 16px 16px;
   width: 17px;
@@ -15052,7 +15052,7 @@ fieldset[disabled] .control-custom.disabled .checkbox.btn.focus {
 }
 .resource-upload-field.loading {
   display: inline-block;
-  background: url("../../../base/images/loading-spinner.gif") no-repeat center right;
+  background: url("../../../../base/images/loading-spinner.gif") no-repeat center right;
   padding-right: 5px;
 }
 .select2-container .select2-choice input,
@@ -15360,15 +15360,19 @@ fieldset[disabled] .control-custom.disabled .checkbox.btn.focus {
   border-bottom: 1px solid #dee2e6;
 }
 .additional-info td,
-.additional-info th {
+.additional-info th .module-content td,
+.module-content th {
   width: 50%;
   padding: 1rem 1.5rem 1rem 1.5rem !important;
 }
-.additional-info table tbody tr:nth-of-type(odd) {
+.additional-info table tbody tr:nth-of-type(odd),
+.module-content table tbody tr:nth-of-type(odd) {
   background-color: #fff;
 }
 .additional-info table tbody tr:nth-child(even) th,
-.additional-info table tbody tr:nth-child(even) td {
+.module-content table tbody tr:nth-child(even) th,
+.additional-info table tbody tr:nth-child(even) td,
+.module-content table tbody tr:nth-child(even) td {
   background-color: #F8FAFB;
 }
 .label[data-format=html],
@@ -15944,7 +15948,7 @@ h4 small {
   top: 2px;
   width: 16px;
   height: 16px;
-  background-image: url("../../../base/images/sprite-ckan-icons.png");
+  background-image: url("../../../../base/images/sprite-ckan-icons.png");
   background-repeat: no-repeat;
   background-position: 16px 16px;
 }
@@ -16132,11 +16136,11 @@ h4 small {
   top: 2px;
   width: 16px;
   height: 16px;
-  background-image: url("../../../base/images/sprite-ckan-icons.png");
+  background-image: url("../../../../base/images/sprite-ckan-icons.png");
   background-repeat: no-repeat;
   background-position: 16px 16px;
   text-indent: -900em;
-  background: url("../../../base/images/sprite-resource-icons.png") no-repeat 0 0;
+  background: url("../../../../base/images/sprite-resource-icons.png") no-repeat 0 0;
 }
 .format-label {
   width: 32px;
@@ -17217,7 +17221,7 @@ body {
 .js .table-toggle-more .toggle-seperator td {
   height: 11px;
   padding: 0;
-  background-image: url("../../../base/images/table-seperator.png");
+  background-image: url("../../../../base/images/table-seperator.png");
 }
 .js .table .toggle-show td {
   background: none;
@@ -17239,7 +17243,7 @@ body {
 .activity {
   padding: 0;
   list-style-type: none;
-  background: transparent url('../../../base/images/dotted.png') 14px 0 repeat-y;
+  background: transparent url('../../../../base/images/dotted.png') 14px 0 repeat-y;
 }
 .activity .item {
   position: relative;
@@ -17484,7 +17488,7 @@ body {
   right: -10px;
   width: 10px;
   height: 21px;
-  background: transparent url("../../../base/images/dashboard-followee-related.png");
+  background: transparent url("../../../../base/images/dashboard-followee-related.png");
 }
 .popover-followee .popover-title {
   display: none;

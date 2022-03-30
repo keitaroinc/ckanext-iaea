@@ -25,6 +25,21 @@ const build = () =>
     .pipe(if_(with_sourcemaps(), sourcemaps.write()))
     .pipe(rename(renamer))
     .pipe(dest(__dirname + "/ckanext/iaea/fanstatic/css"));
+
+
+
+const dataxplorerbuild = () =>
+src([
+  __dirname + "/ckanext/iaea/public/base/less/dataexplorer.less",
+])
+  .pipe(if_(with_sourcemaps(), sourcemaps.init()))
+  .pipe(less())
+  .pipe(if_(with_sourcemaps(), sourcemaps.write()))
+  .pipe(rename(renamer))
+  .pipe(dest(__dirname + "/ckanext/iaea/fanstatic/css/"));
+
+
+
 const watchSource = () =>
   watch(
     __dirname + "/ckanext/iaea/public/base/less/**/*.less",
@@ -32,5 +47,6 @@ const watchSource = () =>
     build
   );
 
+  exports.dataxplorer = dataxplorerbuild
   exports.build = build;
   exports.watch = watchSource;
