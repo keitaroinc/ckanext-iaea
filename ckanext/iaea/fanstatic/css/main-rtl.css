@@ -15201,6 +15201,47 @@ fieldset[disabled] .control-custom.disabled .checkbox.btn.focus {
     word-wrap: break-word;
   }
 }
+.dataset-description .row {
+  margin: 0;
+  margin-bottom: 30px;
+}
+.dataset-description .row:nth-child(2) {
+  border: 2px solid #f7f7f7;
+  border-left: 0 ;
+  border-right: 0 ;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  padding: 10px 0;
+}
+.dataset-description ul.social-share {
+  display: flex;
+  list-style: none;
+  margin-bottom: 0;
+}
+.dataset-description ul.social-share li {
+  border: 1px solid #3366CC;
+  min-width: 30px;
+  min-height: 30px;
+  border-radius: 100%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+}
+.dataset-description ul.social-share li:hover {
+  background: #3366CC;
+}
+.dataset-description ul.social-share li:hover .fa {
+  color: white ;
+}
+.dataset-description .date-metadata {
+  font-size: 14px;
+}
+.left-container .context-info {
+  padding-top: 18px;
+}
 .dataset-item:last-of-type {
   border-bottom: none;
   margin-bottom: 0;
@@ -15281,6 +15322,9 @@ fieldset[disabled] .control-custom.disabled .checkbox.btn.focus {
   right: 10px;
 }
 @media (max-width: 991px) {
+  .dataset-description .right-content {
+    display: none;
+  }
   .resource-item .btn-group {
     display: none;
   }
@@ -16747,6 +16791,86 @@ body {
 .account-masthead .account.authed .image img {
   vertical-align: -6px;
   border-radius: 4px;
+}
+.account-masthead .top-links {
+  float: right;
+}
+.account-masthead .top-links ul:before,
+.account-masthead .top-links ul:after {
+  display: table;
+  content: " ";
+}
+.account-masthead .top-links ul:after {
+  clear: both;
+}
+.account-masthead .top-links ul:before,
+.account-masthead .top-links ul:after {
+  display: table;
+  content: " ";
+}
+.account-masthead .top-links ul:after {
+  clear: both;
+}
+.account-masthead .top-links ul li {
+  display: block;
+  float: left;
+  border-left: 1px solid #24478f;
+}
+.account-masthead .top-links ul li a {
+  display: block;
+  color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 0 10px;
+  line-height: 31px;
+}
+.account-masthead .top-links ul li a span.username,
+.account-masthead .top-links ul li a span.text {
+  margin: 0 2px 0 4px;
+}
+.account-masthead .top-links ul li a span.text {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+.account-masthead .top-links ul li a:hover {
+  color: #e0e8f7;
+  background-color: #24478f;
+  text-decoration: none;
+}
+.account-masthead .top-links ul li a.sub {
+  font-weight: 300;
+}
+.account-masthead .top-links ul li a .btn {
+  vertical-align: 1px;
+  margin-left: 3px;
+}
+.account-masthead .top-links .notifications a span.badge {
+  font-size: 12px;
+  margin-left: 3px;
+  padding: 1px 6px;
+  background-color: #24478f;
+  border-radius: 4px;
+  text-shadow: none;
+  color: #ccd9f2;
+}
+.account-masthead .top-links .notifications a:hover span {
+  color: #fff;
+  background-color: #1f3d7a;
+}
+.account-masthead .top-links .notifications.notifications-important a span.badge {
+  color: #fff;
+  background-color: #C9403A;
+}
+.account-masthead .top-links.authed .image {
+  padding: 0 6px;
+}
+.account-masthead .top-links.authed .image img {
+  vertical-align: -6px;
+  border-radius: 4px;
+}
+.account-masthead .top-links ul li {
+  border-left: 0px;
 }
 .masthead {
   margin-bottom: initial;

@@ -2,6 +2,18 @@
 <header class="account-masthead">
   <div class="container">
     {% block header_account_container_content %} {% if c.userobj %}
+    <div class="pull-left">
+      <nav class="top-links">
+        <ul class="list-unstyled">
+          <li>
+            <a href="https://www.iaea.org/" target="_blank" rel="noopener noreferrer">IAEA</a>
+          </li>
+          <li>
+            <a href="/">{{ _('Data Portal') }}</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
     <div class="account avatar authed" data-module="me" data-me="{{ c.userobj.id }}">
       <ul class="list-unstyled">
         {% block header_account_logged %} {% if c.userobj.sysadmin %}
