@@ -43,7 +43,7 @@ def metadata(id):  # noqa
     c.pkg = pkg
 
     return base.render(
-        u'package/activity.html', {
+        u'package/metadata.html', {
             u'dataset_type': dataset_type,
             u'pkg_dict': pkg_dict,
             u'pkg': pkg,
