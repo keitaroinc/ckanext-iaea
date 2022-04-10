@@ -1,26 +1,30 @@
 {% set intro = g.site_intro_text %}
 
-<div class="module-content box">
-  <header>
+<div class="hero-content">
     {% if intro %}
-      {{ h.render_markdown(intro) }}
+    {{ h.render_markdown(intro) }}
     {% else %}
-      <h1 class="page-heading">{{ _("The home of the IAEA’s open data") }}</h1>
-      <p>
-        {% trans %}Here you will find data tools and resources to conduct research, 
-        develop web and mobile application design data visualization and <a href="#">more</a>. 
-        {% endtrans %}
-      </p>
+    <h1 class="page-heading">{{ _("IAEA Data Platform") }}</h1>
+    <p>
+      {% trans %} The IAEA Data Platform provides access to data resources maintained or shared by the IAEA. Access to
+      certain datasets may require registration.{% endtrans %}
+    </p>
+    <div class="main-search">
+      <form class="search-form" method="get" action="{% url_for controller='package', action='search' %}">
+        <h3 class="heading">{{ _("Search data") }}</h3>
+        <div class="search-input form-group ">
+          <input aria-label="{% block header_site_search_label %}{{ _('Search datasets') }}{% endblock %}"
+            id="field-main-search" type="text" class="form-control" name="q" value="" autocomplete="off"
+            placeholder="{% block search_placeholder %}{{ placeholder }}{% endblock %}" />
+          <button type="submit">
+            <i class="fa fa-search"></i>
+            <span class="sr-only">{{ _('Search') }}</span>
+          </button>
+        </div>
+      </form>
+    </div>
+    <div>
+      Popular Tags:
+    </div>
     {% endif %}
-  </header>
-
-  {% block home_image %}
-    <section class="featured media-overlay hidden-xs">
-      {% block home_image_content %}
-        <a class="media-image" href="#">
-          <img class="img-responsive" src="{{ h.url_for_static('/images/featured-image.jpeg') }}" alt="Placeholder" />
-        </a>
-      {% endblock %}
-    </section>
-  {% endblock %}
 </div>

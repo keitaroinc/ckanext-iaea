@@ -89,7 +89,15 @@
       </span>
     </div>
     <div class="col-xs-4"> 
-      <ul class="social-share pull-right">
+      <div class="social-share pull-left">
+        {% if pkg.author_email %}
+        <a  href="mailto:{{pkg.author_email}}" class="btn " style="float: right;">
+          <i class="fa fa-envelope"></i> 
+            Contact dataset owner
+        </a>
+      {% endif %}
+      </div>
+      <ul class="social-share pull-left">
         <li><a href="https://www.facebook.com/sharer.php?u={{ current_url }} target="_blank""><i class="fa fa-facebook"></i></a></li>
         <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ current_url }}" target="_blank"><i class="fa fa-linkedin"></i></a></li>
         <li><a href="https://twitter.com/share?url={{current_url}}" target="_blank"><i class="fa fa-twitter"></i></a></li>
