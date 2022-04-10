@@ -9782,6 +9782,23 @@ body {
 .homepage.layout-2 .stats {
   margin-top: 20px;
 }
+.hero {
+  background: url("/images/hero.jpg");
+}
+.hero .overlay {
+  background-blend-mode: overlay;
+  background: linear-gradient(0deg, #3366CC 0%, rgba(79, 128, 228, 0) 100%);
+}
+.hero .overlay::before {
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(0deg, #3366CC 0%, rgba(79, 128, 228, 0) 100%);
+}
 @media (min-width: 768px) {
   .hero {
     background: url("/images/hero.jpg");
@@ -9812,6 +9829,9 @@ body {
 .hero-content .summary {
   font-size: 18px;
   font-weight: 300;
+}
+.hero-content .main-search {
+  padding-right: 30px;
 }
 .hero-content .main-search .search-input input {
   height: 50px;

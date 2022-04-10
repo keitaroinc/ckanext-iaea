@@ -77,6 +77,28 @@
     }
 }
 
+.hero {
+    background: url("/images/hero.jpg");
+}
+
+.hero .overlay {
+    background-blend-mode: overlay;
+    background: linear-gradient(0deg, @primaryBlueColor 0%, rgba(79,128,228,0) 100%);
+    &::before {
+        content: "";
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: auto;
+        bottom: 0;
+        width: 100%;
+        background: linear-gradient(0deg, @primaryBlueColor 0%, rgba(79,128,228,0) 100%);
+
+    }
+    
+}
+
+
 @media (min-width: @screen-sm-min) {
     .hero {
         background: url("/images/hero.jpg");
@@ -113,6 +135,7 @@
     }
 
     .main-search {
+        padding-right: 30px;
         .search-input input {
             height: 50px;
             &::placeholder {
