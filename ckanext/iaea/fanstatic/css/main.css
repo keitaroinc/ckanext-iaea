@@ -8653,6 +8653,31 @@ fieldset[disabled] .control-custom.disabled .checkbox.btn.focus {
 .resource-view {
   margin-top: 20px;
 }
+.dataset-disclaimer {
+  margin: 20px 0;
+  background: #f5f7fc;
+  border: 1px solid #3366CC;
+}
+.dataset-disclaimer .title {
+  display: flex;
+}
+.dataset-disclaimer .title svg {
+  fill: #3366CC;
+  width: 20px;
+  margin-right: 10px;
+}
+.dataset-disclaimer .title h4 {
+  font-size: 18px;
+  color: #3366CC;
+  padding: 0;
+  margin: 0;
+}
+.dataset-disclaimer p {
+  padding-top: 10px;
+  margin-left: 20px;
+  color: #11306f;
+  font-size: 14px;
+}
 .search-form {
   margin-bottom: 20px;
   padding-bottom: 25px;
