@@ -1,7 +1,7 @@
 {% block header_wrapper %} {% block header_account %}
 <header class="account-masthead">
   <div class="container">
-    {% block header_account_container_content %} {% if c.userobj %}
+    {% block header_account_container_content %} 
     <div class="pull-left">
       <nav class="top-links">
         <ul class="list-unstyled">
@@ -14,6 +14,7 @@
         </ul>
       </nav>
     </div>
+    {% if c.userobj %}
     <div class="account avatar authed" data-module="me" data-me="{{ c.userobj.id }}">
       <ul class="list-unstyled">
         {% block header_account_logged %} {% if c.userobj.sysadmin %}
