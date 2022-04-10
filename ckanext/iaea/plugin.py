@@ -2,6 +2,7 @@ import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 import ckan.logic as logic
 from ckan.lib.plugins import DefaultTranslation
+from sqlalchemy import literal
 from ckanext.iaea.logic import action
 from flask import Blueprint
 from ckanext.iaea import view
@@ -12,6 +13,11 @@ def package_activity_html(id):
     return activity
    
 
+def gravatar(email_hash, size=100, default=None):
+    image = literal('''<img src="/images/user-placeholder.png" class="avatar" 
+    width="%s" height="%s" alt="avatar" />''' % (size, size))
+    return image.value
+                   
 def featured_group():
     try:
         group_list = logic.get_action('group_list')(
@@ -70,10 +76,13 @@ class IaeaPlugin(plugins.SingletonPlugin, DefaultTranslation):
         toolkit.add_resource('fanstatic', 'iaea')
 
     def get_helpers(self):
+
         return {
             'featured_group': featured_group,
             'package_activity_html': package_activity_html,
-            'suggested_filter_fields_serializer': suggested_filter_fields_serializer
+            'suggested_filter_fields_serializer': suggested_filter_fields_serializer,
+            'gravatar':  gravatar,
+            'linked_gravatar': gravatar
         }
         
     # IActions
