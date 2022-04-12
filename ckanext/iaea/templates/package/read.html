@@ -1,17 +1,15 @@
 {% ckan_extends %}
 
-{% block page_heading %}
-  {{ h.dataset_display_name(pkg) }}
-  {% if pkg.state.startswith('draft') %}
-          [{{ _('Draft') }}]
-  {% endif %}
-  {% if pkg.state == 'deleted' %}
-          [{{ _('Deleted') }}]
-  {% endif %}
-  {% if pkg.maintainer_email %}
-    <a  href="mailto:{{pkg.maintainer_email}}" class="btn btn-default" style="float: right;">
-      <i class="fa fa-envelope"></i> 
-        Contact dataset maintainer
-    </a>
-  {% endif %}
+
+
+{% block package_description %}
 {% endblock %}
+
+{% block package_resources %}
+  {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources %}
+{% endblock %}
+
+
+{% block package_additional_info %}
+{% endblock %}
+

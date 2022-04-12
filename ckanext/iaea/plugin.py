@@ -3,7 +3,15 @@ import ckan.plugins.toolkit as toolkit
 import ckan.logic as logic
 from ckan.lib.plugins import DefaultTranslation
 from ckanext.iaea.logic import action
+from flask import Blueprint
+from ckanext.iaea import view
 
+def package_activity_html(id):
+    activity =  logic.get_action(
+            'package_activity_list_html')({}, {'id': id})
+    return activity
+   
+                   
 def featured_group():
     try:
         group_list = logic.get_action('group_list')(
@@ -52,6 +60,7 @@ class IaeaPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IActions)
+    plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.ITemplateHelpers, inherit=True)
 
     # IConfigurer
@@ -63,6 +72,7 @@ class IaeaPlugin(plugins.SingletonPlugin, DefaultTranslation):
     def get_helpers(self):
         return {
             'featured_group': featured_group,
+            'package_activity_html': package_activity_html,
             'suggested_filter_fields_serializer': suggested_filter_fields_serializer
         }
         
@@ -72,3 +82,11 @@ class IaeaPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'resource_view_create': action.resource_view_create,
             'resource_view_update': action.resource_view_update
         }
+    # IBlueprint
+    def get_blueprint(self):
+        blueprint = Blueprint(self.name, self.__module__)
+        blueprint.template_folder = u'templates'
+        # Add plugin url rules to Blueprint object
+        blueprint.add_url_rule(u'/dataset/metadata/<id>', view_func=view.metadata)
+
+        return blueprint

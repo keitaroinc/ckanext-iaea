@@ -1,42 +1,73 @@
+{% set intro = g.site_intro_text %}
+{% set tags = h.get_facet_items_dict('tags', limit=3) %}
+
 <div role="main" class="hero">
   <div class="container">
     <div class="overlay">
     </div>
     <div class="row row1">
-      <div class="col-md-6">
-        {% block promoted %}
-          {% snippet 'home/snippets/promoted.html' %}
-        {% endblock %}
-      </div>
-      <div class="col-md-6">
-        {% block stats %}
-          {% snippet 'home/snippets/stats.html' %}
-        {% endblock %}
-        <br/>
-        {% block search %}
-          {% snippet 'home/snippets/search.html' %}
-        {% endblock %}
+      <div class="col-md-8">
+        <div class="hero-content">
+          {% if intro %}
+          {{ h.render_markdown(intro) }}
+          {% else %}
+          <h1 class="title">{{ _("IAEA Data Platform") }}</h1>
+          <p class="summary">
+            {% trans %} The AEA Data Platform provides access to data resources maintained or shared by the IAEA.
+            Access to certain datasets may require registration.{% endtrans %}
+          </p>
+          <div class="main-search">
+            <form class="search-form" method="get" action="{% url_for controller='package', action='search' %}">
+              <div class="search-input form-group ">
+                <input aria-label="{% block header_site_search_label %}{{ _('Search datasets') }}{% endblock %}"
+                  id="field-main-search" type="text" class="form-control" name="q" value="" autocomplete="off"
+                  placeholder="{% block search_placeholder %}{{ _('Search datasets') }}{% endblock %}" />
+                <button type="submit">
+                  <i class="fa fa-search"></i> {{ _('Search') }}
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="popular-tag">
+            <p>Popular Tags: &nbsp;
+              {% for tag in tags %}
+              <a class="tag" href="{% url_for controller='package', action='search', tags=tag.name %}">{{
+                h.truncate(tag.display_name, 22) }}</a> &nbsp;
+              {% endfor %}
+            </p>
+          </div>
+          <div class="readmore-btn">
+            <a class="btn btn-default" href="#">Read more</a>
+          </div>
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
 </div>
+</div>
+
 <div role="main">
   <div class="container">
-    <div class="row row1">
+    <div class="row row1 group-feature">
       {% block featured_group %}
-        {% for group in h.featured_group() %}
-          {% set type = group.type or 'group' %}
-          {% set url = h.url_for(type ~ '_read', action = 'read', id = group.name) %}
-          <a href="{{ url }}" title="{{ _('View {name}').format(name=group.display_name) }}"/>
-          <div class="col-xs-2 col-md-2">
-            <p>
-              <img src="{{ group.image_display_url or h.url_for_static('/base/images/placeholder-group.png') }}" alt="{{ group.name }}" class="media-image img-responsive">
-            </p>
-            <h3>{{group.title or group.display_name}}</h3>
-            <p>{{ h.markdown_extract(group.description)|urlize }}</p>
-          </div>
-        </a>
-        {% endfor%}
+      <div class="title">
+        <h1> Topics</h1>
+      </div>
+      {% for group in h.featured_group() %}
+      {% set type = group.type or 'group' %}
+      {% set url = h.url_for(type ~ '_read', action = 'read', id = group.name) %}
+      <a href="{{ url }}" title="{{ _('View {name}').format(name=group.display_name) }}" />
+      <div class="col-xs-3 col-md-3">
+        <div class="group-feature-item">
+          <img src="{{ group.image_display_url or h.url_for_static('/base/images/placeholder-group.png') }}"
+            alt="{{ group.name }}" class="media-image img-responsive">
+          <h3>{{group.title or group.display_name}}</h3>
+          <p>{{ h.markdown_extract(group.description)|urlize |truncate(135) }}</p>
+        </div>
+      </div>
+      </a>
+      {% endfor%}
       {% endblock %}
     </div>
   </div>

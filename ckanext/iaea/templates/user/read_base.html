@@ -1,0 +1,6 @@
+{% ckan_extends %}
+
+
+{% block user_image %}
+<div class="image">{{ h.gravatar(user.email_hash, 10) | safe }}</div>
+{% endblock %}
