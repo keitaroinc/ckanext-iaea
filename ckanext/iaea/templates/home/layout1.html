@@ -51,6 +51,9 @@
   <div class="container">
     <div class="row row1 group-feature">
       {% block featured_group %}
+      <div class="title">
+        <h1> Topics</h1>
+      </div>
       {% for group in h.featured_group() %}
       {% set type = group.type or 'group' %}
       {% set url = h.url_for(type ~ '_read', action = 'read', id = group.name) %}
