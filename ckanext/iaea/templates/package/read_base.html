@@ -88,16 +88,16 @@
         {{pkg.metadata_modified}}
       </span>
     </div>
-    <div class="col-xs-4"> 
-      <div class="social-share pull-left">
-        {% if pkg.author_email %}
-        <a  href="mailto:{{pkg.author_email}}" class="btn " style="float: right;">
+    <div class="col-xs-4 right-metadata"> 
+      {% if pkg.maintainer_email %}
+      <div class="social-share">
+        <a  href="mailto:{{pkg.maintainer_email}}" class="btn " style="float: right;">
           <i class="fa fa-envelope"></i> 
-            Contact dataset owner
+            Contact dataset maintainer
         </a>
-      {% endif %}
       </div>
-      <ul class="social-share pull-left">
+      {% endif %}
+      <ul class="social-share">
         <li><a href="https://www.facebook.com/sharer.php?u={{ current_url }} target="_blank""><i class="fa fa-facebook"></i></a></li>
         <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ current_url }}" target="_blank"><i class="fa fa-linkedin"></i></a></li>
         <li><a href="https://twitter.com/share?url={{current_url}}" target="_blank"><i class="fa fa-twitter"></i></a></li>

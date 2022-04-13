@@ -25,29 +25,35 @@
           }
     }
     
-    ul.social-share {
+    .right-metadata {
         display: flex;
-        list-style: none;
-        margin-bottom: 0;
-
-        li {
-            border: 1px solid @primaryBlueColor;
-            min-width: 30px;
-            min-height: 30px;
-            border-radius: 100%;
+        align-items: center;
+        justify-content: flex-end;
+        ul.social-share {
             display: flex;
-            align-content: center;
-            align-items: center;
-            justify-content: center;
-            margin-left: 10px;
-            &:hover {
-                .fa {
-                    color: white ;
+            list-style: none;
+            margin-bottom: 0;
+    
+            li {
+                border: 1px solid @primaryBlueColor;
+                min-width: 30px;
+                min-height: 30px;
+                border-radius: 100%;
+                display: flex;
+                align-content: center;
+                align-items: center;
+                justify-content: center;
+                margin-left: 10px;
+                &:hover {
+                    .fa {
+                        color: white ;
+                    }
+                    background: @primaryBlueColor;
                 }
-                background: @primaryBlueColor;
             }
         }
     }
+
     .date-metadata {
         font-size: 14px;
     }
