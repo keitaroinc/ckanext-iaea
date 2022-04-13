@@ -16,6 +16,7 @@
             {% trans %} The AEA Data Platform provides access to data resources maintained or shared by the IAEA.
             Access to certain datasets may require registration.{% endtrans %}
           </p>
+          {% endif %}
           <div class="main-search">
             <form class="search-form" method="get" action="{% url_for controller='package', action='search' %}">
               <div class="search-input form-group ">
@@ -39,7 +40,6 @@
           <div class="readmore-btn">
             <a class="btn btn-default" href="#">Read more</a>
           </div>
-          {% endif %}
         </div>
       </div>
     </div>
