@@ -8,7 +8,7 @@ from ckanext.iaea import view
 
 def package_activity_html(id):
     activity =  logic.get_action(
-            'package_activity_list_html')({}, {'id': id})
+            'package_activity_list_html')({}, {'id': id ,'limit': 8})
     return activity
    
                    
