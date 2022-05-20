@@ -19,7 +19,8 @@
 
 {% block content_primary_nav %}
   {{ h.build_nav_icon('dataset_read', _('Dataset'), id=pkg.name) }}
-  {{ h.build_nav_icon('iaea.metadata', _('Metadata'),  id=pkg.name, icon='fa fa-tag') }}
+  {{ h.build_nav_icon('iaea.metadata', _('Metadata'), id=pkg.name, icon='fa fa-tag') }}
+  {{ h.build_nav_icon('iaea.feature_view', _('View'), id=pkg.name, icon='check-square-o') }}
 {% endblock %}
 
 {% block primary_content_inner %}
@@ -106,6 +107,9 @@
     </div>
   </div>
 </div>
+  {% if pkg.featured_view %}
+    <iframe src="{{h.featured_view_url(pkg)}}" class="dataset-feature-view"></iframe>
+  {% endif %}
 {% endblock %}
 
 

@@ -5,6 +5,7 @@ from ckan.lib.plugins import DefaultTranslation
 from ckanext.iaea.logic import action
 from flask import Blueprint
 from ckanext.iaea import view
+import ckan.model as model
 
 def package_activity_html(id):
     activity =  logic.get_action(
@@ -56,12 +57,45 @@ def suggested_filter_fields_serializer(datapackage, view_dict):
     return datapackage
     
 
-class IaeaPlugin(plugins.SingletonPlugin, DefaultTranslation):
+def featured_view_url(pkg):
+    featured_view = model.ResourceView.get(pkg['featured_view'])
+    return toolkit.h.url_for(qualified=True, controller='package',
+                               action='resource_view', id=pkg['name'],
+                               resource_id=featured_view.resource_id,
+                               view_id=featured_view.id)
+                            
+class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
+                  DefaultTranslation):
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IConfigurer)
+    plugins.implements(plugins.IDatasetForm)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.ITemplateHelpers, inherit=True)
+
+    # IDatasetForm
+    def update_package_schema(self):
+        schema = super(IaeaPlugin, self).update_package_schema()
+        schema.update({
+            u'featured_view': [toolkit.get_validator(u'ignore_missing'),
+                             toolkit.get_converter(u'convert_to_extras')]
+        })
+        return schema
+
+    def show_package_schema(self):
+        schema = super(IaeaPlugin, self).show_package_schema()
+        schema.update({
+            u'featured_view': [toolkit.get_converter(u'convert_from_extras'),
+                             toolkit.get_validator(u'ignore_missing')],
+        })
+        return schema
+
+    def is_fallback(self):
+        return True
+
+    def package_types(self):
+        return []
+
 
     # IConfigurer
     def update_config(self, config_):
@@ -73,7 +107,8 @@ class IaeaPlugin(plugins.SingletonPlugin, DefaultTranslation):
         return {
             'featured_group': featured_group,
             'package_activity_html': package_activity_html,
-            'suggested_filter_fields_serializer': suggested_filter_fields_serializer
+            'suggested_filter_fields_serializer': suggested_filter_fields_serializer,
+            'featured_view_url': featured_view_url,
         }
         
     # IActions
@@ -88,5 +123,5 @@ class IaeaPlugin(plugins.SingletonPlugin, DefaultTranslation):
         blueprint.template_folder = u'templates'
         # Add plugin url rules to Blueprint object
         blueprint.add_url_rule(u'/dataset/metadata/<id>', view_func=view.metadata)
-
+        blueprint.add_url_rule(u'/dataset/<id>/view', view_func=view.FeatureView.as_view(str(u'feature_view')))
         return blueprint
