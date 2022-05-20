@@ -120,6 +120,7 @@ class FeatureView(MethodView):
             package_views, context)
 
         package_views_dict = []
+        package_views_list = sorted(package_views_list, key=lambda k: k['resource_id'])
         for k, v in groupby(package_views_list, key=lambda x: x['resource_id']):
             resource_name = model.Session.query(model.Resource.name).filter(
                 model.Resource.id == k).first()[0]
@@ -163,6 +164,7 @@ class FeatureView(MethodView):
             package_views, context)
 
         package_views_dict = []
+        package_views_list = sorted(package_views_list, key=lambda k: k['resource_id'])
         for k, v in groupby(package_views_list, key=lambda x: x['resource_id']):
             resource_name = model.Session.query(model.Resource.name).filter(
                 model.Resource.id == k).first()[0]
