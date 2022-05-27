@@ -122,13 +122,17 @@ class FeatureView(MethodView):
         package_views_dict = []
         package_views_list = sorted(package_views_list, key=lambda k: k['resource_id'])
         for k, v in groupby(package_views_list, key=lambda x: x['resource_id']):
-            resource_name = model.Session.query(model.Resource.name).filter(
-                model.Resource.id == k).first()[0]
-            view_dict = {
-                'resource_name': resource_name,
-                'resource_id': k,
-                'views': list(v)
-            }
+            [resource_name, state ] = model.Session.query(model.Resource.name.label('name'), model.Resource.state.label('state')).filter(
+                model.Resource.id == k).first()
+
+            if state == 'deleted':
+                continue 
+            else: 
+                view_dict = {
+                    'resource_name': resource_name,
+                    'resource_id': k,
+                    'views': list(v)
+                }
 
             package_views_dict.append(view_dict)
 
@@ -166,13 +170,17 @@ class FeatureView(MethodView):
         package_views_dict = []
         package_views_list = sorted(package_views_list, key=lambda k: k['resource_id'])
         for k, v in groupby(package_views_list, key=lambda x: x['resource_id']):
-            resource_name = model.Session.query(model.Resource.name).filter(
-                model.Resource.id == k).first()[0]
-            view_dict = {
-                'resource_name': resource_name,
-                'resource_id': k,
-                'views': list(v)
-            }
+            [resource_name, state ] = model.Session.query(model.Resource.name.label('name'), model.Resource.state.label('state')).filter(
+                model.Resource.id == k).first()
+
+            if state == 'deleted':
+                continue 
+            else: 
+                view_dict = {
+                    'resource_name': resource_name,
+                    'resource_id': k,
+                    'views': list(v)
+                }
 
             package_views_dict.append(view_dict)
 

@@ -2,8 +2,10 @@
 
 {% block primary_content_inner %}
 {% if package_views %}
+
 <form action="#" method="post">
     <fieldset class="fields-feature-view form-group">
+        <p>Select a view that should be featured on the dataset page.</p>
         {% for resource in package_views %}
         <h3> {{ resource.resource_name }}</h3>
         {% for view in resource.views %}
