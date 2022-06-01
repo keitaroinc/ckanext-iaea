@@ -15613,13 +15613,7 @@ fieldset[disabled] .control-custom.disabled .checkbox.btn.focus {
   align-content: center;
   justify-content: space-between;
   align-items: center;
-  position: relative;
-}
-.dataset-view-container .action {
-  margin-top: 20px;
-  position: absolute;
-  right: 0;
-  top: 69px;
+  border-bottom: 1px solid #edf3f7;
 }
 .dataset-feature-view {
   width: 100%;
@@ -16379,7 +16373,6 @@ body {
 @media (min-width: 768px) {
   .wrapper:before {
     content: '';
-    display: block;
     position: absolute;
     top: 0;
     bottom: 0;
