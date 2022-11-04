@@ -15,7 +15,8 @@ RUN echo $TZ > /etc/timezone
 RUN apk add --no-cache libffi-dev
 
 # Install CKAN dev requirements
-RUN pip install --no-binary :all: -r https://raw.githubusercontent.com/ckan/ckan/${GIT_BRANCH}/dev-requirements.txt
+#RUN pip install --no-binary :all: -r https://raw.githubusercontent.com/ckan/ckan/${GIT_BRANCH}/dev-requirements.txt
+RUN pip install flask-debugtoolbar
 
 
 # Install CKAN extensions
