@@ -2,6 +2,8 @@ version: "3"
 
 services:
   ckan:
+    profiles: ["full"]
+    hostname: ckan.iaea.local
     build:
       context: ckan/
       dockerfile: Dockerfile
@@ -33,6 +35,8 @@ services:
       - .env
     environment:
       - "PGDATA=/var/lib/postgresql/data/dbdata"
+    ports:
+      - "5432:5432"
     build:
       context: postgresql/
     volumes:
@@ -50,6 +54,8 @@ services:
   redis:
     container_name: redis
     image: redis:alpine
+    ports:
+      - "6379:6379"
 
 volumes:
   ckan_storage:
