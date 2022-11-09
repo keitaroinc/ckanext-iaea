@@ -23,11 +23,22 @@ services:
       - ckan_storage:/var/lib/ckan
 
   datapusher:
+    profiles: ["full"]
     container_name: datapusher
     build:
       context: datapusher/
     ports:
       - "8800:8800"
+
+  datapusher-dev:
+    profiles: ["dev"]
+    container_name: datapusher-dev
+    build:
+      context: datapusher/
+    ports:
+      - "8800:8800"
+    extra_hosts:
+      - "ckan.iaea.local:172.22.0.1"
 
   db:
     container_name: db

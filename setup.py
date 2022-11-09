@@ -81,6 +81,7 @@ setup(
     entry_points='''
         [ckan.plugins]
         iaea=ckanext.iaea.plugin:IaeaPlugin
+        iaea_db_harvester=ckanext.iaea.harvesters:DBHarvester
 
         [babel.extractors]
         ckan = ckan.lib.extract:extract_ckan

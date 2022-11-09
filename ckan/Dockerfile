@@ -23,6 +23,10 @@ RUN pip install flask-debugtoolbar
 RUN pip install -e git+https://github.com/ckan/ckanext-pdfview.git#egg=ckanext-pdfview && \
     pip install -e git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages
 
+# Install ckanext-harvest
+RUN pip install -e git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest
+RUN pip install -r ./src/ckanext-harvest/requirements.txt
+
 # Create folder for local extensions sources
 RUN mkdir $SRC_EXTENSIONS_DIR
 RUN mkdir $IAEA_EXTENSION_DIR
