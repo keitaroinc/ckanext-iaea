@@ -48,3 +48,99 @@ This would provide (accessible on the host):
 * Redis at port `6379`
 * Solr at port `8983`
 * Datapusher at port `8800`
+
+
+# Development setup
+
+## Install required extensions
+
+### ckanext-pdfview
+We need version `0.0.7` for this extension:
+
+```
+git clone https://github.com/ckan/ckanext-pdfview.git
+cd ckanext-pdfview
+git checkout 0.0.7
+python setup.py develop
+```
+
+### ckanext-authz-service
+
+```bash
+git clone https://github.com/datopian/ckanext-authz-service.git
+cd ckanext-authz-service
+python setup.py develop
+pip install -r requirements.py2.txt
+```
+
+### ckanext-sentry
+
+```
+git clone https://github.com/okfn/ckanext-sentry.git
+cd ckanext-sentry/
+python setup.py develop
+pip install -r requirements.txt 
+```
+
+### ckanext-basiccharts
+```
+git clone https://github.com/ckan/ckanext-basiccharts.git
+cd ckanext-basiccharts/
+python setup.py develop
+```
+
+### ckanext-basiccharts
+```
+git clone https://github.com/ckan/ckanext-basiccharts.git
+cd ckanext-basiccharts
+python setup.py develop
+```
+
+### ckanext-visualize
+```
+git clone https://github.com/datopian/ckanext-visualize.git
+cd ckanext-visualize
+python setup.py develop
+pip install -r requirements.txt
+```
+### ckanext-geoview
+This repository is cloned, to apply a patch for IAEA:
+
+```
+git clone https://github.com/keitaroinc/ckanext-geoview
+cd ckanext-geoview
+git checkout iaea
+python setup.py develop
+```
+
+### ckanext-pages
+On tag `v0.3.7`:
+
+```
+git clone https://github.com/ckan/ckanext-pages
+cd ckanext-pages
+git checkout v0.3.7
+python setup.py develop
+pip install -r requirements.txt
+```
+### ckanext-dataexplorer-react
+Cloned, has customization:
+
+```
+git clone https://github.com/keitaroinc/ckanext-dataexplorer-react.git
+cd ckanext-dataexplorer-react
+git checkout iaea
+python setup.py develop
+pip install -r requirements.txt
+```
+
+### ckanext-dcat
+
+On revision `v1.3.0`:
+```
+git clone https://github.com/ckan/ckanext-dcat
+cd ckanext-dcat
+git checkout v1.3.0
+python setup.py develop
+pip install -r requirements-py2.txt
+```
