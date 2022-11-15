@@ -122,6 +122,9 @@ cd ckanext-pages
 git checkout v0.3.7
 python setup.py develop
 pip install -r requirements.txt
+
+# Initialize the database
+paster --plugin=ckanext-pages pages initdb --config=./ckan/development.ini
 ```
 ### ckanext-dataexplorer-react
 Cloned, has customization:
