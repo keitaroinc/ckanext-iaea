@@ -1,9 +1,9 @@
-FROM alpine:3.16
+FROM alpine:3.15
 
 MAINTAINER Open Knowledge Foundation
 
 ENV APP_DIR=/srv/app
-ENV GIT_BRANCH 0.0.17
+ENV GIT_BRANCH 0.0.18
 ENV GIT_URL https://github.com/ckan/datapusher.git
 ENV JOB_CONFIG ${APP_DIR}/datapusher_settings.py
 
@@ -54,4 +54,4 @@ RUN adduser -u 92 -h /srv/app -H -D -S -G www-data www-data
 EXPOSE 8800
 
 CMD ["sh", "-c", \
-    "uwsgi --plugins=http,python --http=0.0.0.0:8800 --socket=/tmp/uwsgi.sock --ini=`echo ${APP_DIR}`/datapusher-uwsgi.ini --wsgi-file=`echo ${APP_DIR}`/datapusher.wsgi"]
+    "uwsgi  --enable-threads --plugins=http,python --http=0.0.0.0:8800 --socket=/tmp/uwsgi.sock --ini=`echo ${APP_DIR}`/datapusher-uwsgi.ini --wsgi-file=`echo ${APP_DIR}`/datapusher.wsgi"]
