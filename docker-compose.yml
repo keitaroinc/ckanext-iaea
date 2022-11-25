@@ -2,6 +2,8 @@ version: "3"
 
 services:
   ckan:
+    profiles: ["full"]
+    hostname: ckan.iaea.local
     build:
       context: ckan/
       dockerfile: Dockerfile
@@ -21,20 +23,35 @@ services:
       - ckan_storage:/var/lib/ckan
 
   datapusher:
+    profiles: ["full"]
     container_name: datapusher
     build:
       context: datapusher/
     ports:
       - "8800:8800"
 
+  datapusher-dev:
+    profiles: ["dev"]
+    container_name: datapusher-dev
+    build:
+      context: datapusher/
+    ports:
+      - "8800:8800"
+    extra_hosts:
+      - "ckan.iaea.local:172.22.0.1"
+
   db:
     container_name: db
     env_file:
       - .env
+    environment:
+      - "PGDATA=/var/lib/postgresql/data/dbdata"
+    ports:
+      - "5432:5432"
     build:
       context: postgresql/
     volumes:
-      - pg_data:/var/lib/postgresql/data
+      - pg_data:/var/lib/postgresql/data/dbdata
 
   solr:
     container_name: solr
@@ -48,6 +65,8 @@ services:
   redis:
     container_name: redis
     image: redis:alpine
+    ports:
+      - "6379:6379"
 
 volumes:
   ckan_storage:
