@@ -1,6 +1,13 @@
 
 {% ckan_extends %}
 
+{% block links %}
+    {{ super() }}
+    {% block googleanalytics_header %}
+        {{ h.iaea_ga_header() }}
+    {% endblock %}
+{% endblock %}
+
 {%- block styles %}
     {% if h.is_rtl_language() %}
         {% resource 'iaea/main-rtl-css' %}
