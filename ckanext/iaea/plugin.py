@@ -7,6 +7,8 @@ from flask import Blueprint
 from ckanext.iaea import view
 import ckan.model as model
 
+from ckanext.iaea.helpers import get_helpers
+
 def package_activity_html(id):
     activity =  logic.get_action(
             'package_activity_list_html')({}, {'id': id ,'limit': 8})
@@ -104,12 +106,14 @@ class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
         toolkit.add_resource('fanstatic', 'iaea')
 
     def get_helpers(self):
-        return {
+        iaea_helpers = {
             'featured_group': featured_group,
             'package_activity_html': package_activity_html,
             'suggested_filter_fields_serializer': suggested_filter_fields_serializer,
             'featured_view_url': featured_view_url,
         }
+        iaea_helpers.update(get_helpers())
+        return iaea_helpers
         
     # IActions
     def get_actions(self):
