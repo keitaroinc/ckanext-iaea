@@ -147,3 +147,40 @@ git checkout v1.3.0
 python setup.py develop
 pip install -r requirements-py2.txt
 ```
+
+### ckanext-report
+
+```bash
+git clone https://github.com/ckan/ckanext-report.git
+cd ckanext-report
+python setup.py develop
+pip install -r requirements.txt
+
+# Initialize the database
+paster --plugin=ckanext-report report initdb --config=./ckan/development.ini
+```
+
+### ckanext-archiver
+
+```bash
+git clone https://github.com/ckan/ckanext-archiver.git
+cd ckanext-archiver
+python setup.py develop
+pip install -r requirements.txt
+
+# Initialize the database for archiver and report
+paster --plugin=ckanext-archiver archiver init --config=./ckan/development.ini
+paster --plugin=ckanext-report report initdb --config=./ckan/development.ini
+```
+
+### ckanext-qa
+
+```
+git clone git@github.com:keitaroinc/ckanext-qa.git
+cd ckanext-qa
+python setup.py develop
+pip install requirements.txt
+
+# Initialize the database
+paster --plugin=ckanext-qa qa init --config=./ckan/development.ini
+```
