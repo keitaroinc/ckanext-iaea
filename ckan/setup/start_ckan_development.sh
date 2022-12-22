@@ -48,6 +48,7 @@ paster --plugin=ckan config-tool $CKAN_INI -s DEFAULT "debug = true"
 # Update the plugins setting in the ini file with the values defined in the env var
 echo "Loading the following plugins: $CKAN__PLUGINS"
 paster --plugin=ckan config-tool $CKAN_INI "ckan.plugins = $CKAN__PLUGINS"
+paster --plugin=ckan config-tool $CKAN_INI "ckan.views.default_views = $CKAN__VIEWS__DEFAULT_VIEWS"
 
 paster --plugin=ckan config-tool $CKAN_INI "ckan.site_url = $CKAN_SITE_URL"
 
@@ -67,6 +68,7 @@ echo "Running DB init scripts"
 paster --plugin=ckanext-archiver archiver init --config="$CKAN_INI"
 paster --plugin=ckanext-report report initdb --config="$CKAN_INI"
 paster --plugin=ckanext-qa qa init --config="$CKAN_INI"
+paster --plugin=ckanext-validation validation init-db --config="$CKAN_INI"
 echo "Init DB scripts completed."
 
 # Run any startup scripts provided by images extending this one

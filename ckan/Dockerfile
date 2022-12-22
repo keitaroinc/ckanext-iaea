@@ -68,6 +68,13 @@ RUN pip install -e "git+http://github.com/ckan/ckanext-archiver.git#egg=ckanext-
 RUN pip install -e "git+http://github.com/keitaroinc/ckanext-qa.git@qa-iaea#egg=ckanext-qa" && \
     pip install -r ./src/ckanext-qa/requirements.txt
 
+# ckanext-validation
+RUN pip install -e "git+https://github.com/keitaroinc/ckanext-validation.git@ckan-2.8.2#egg=ckanext-validation" && \
+    pip install -r ./src/ckanext-validation/requirements.txt
+
+# ckanext-scheming
+RUN pip install --exists-action=w -e "git+https://github.com/keitaroinc/ckanext-scheming.git@ckan-2.8#egg=ckanext-scheming"
+
 # Create folder for local extensions sources
 RUN mkdir $SRC_EXTENSIONS_DIR
 RUN mkdir $IAEA_EXTENSION_DIR

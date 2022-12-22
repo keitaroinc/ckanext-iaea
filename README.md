@@ -184,3 +184,16 @@ pip install requirements.txt
 # Initialize the database
 paster --plugin=ckanext-qa qa init --config=./ckan/development.ini
 ```
+
+# ckanext-validation
+```bash
+git clone git@github.com:keitaroinc/ckanext-validation.git
+cd ckanext-validation/
+git checkout ckan-2.8.2
+python setup.py develop
+pip install -r requirements.txt
+
+# Initialize the database
+
+paster --plugin=ckanext-validation validation init-db -c ./ckan/development.ini
+```
