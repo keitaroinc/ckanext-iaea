@@ -29,24 +29,6 @@ def resource_view_create(up_func, context, data_dict):
 
 
 @p.toolkit.chained_action
-def resource_view_create(up_func, context, data_dict):
-    view_plugin = datapreview.get_view_plugin(data_dict['view_type'])
-    if not view_plugin:
-        raise l.ValidationError(
-            {"view_type": "No plugin found for view_type {view_type}".format(
-                view_type=data_dict['view_type']
-            )}
-        )
-    schema = default_create_resource_view_schema(view_plugin)
-    schema.update({
-        'suggested_filter_fields': [ignore_missing]
-    })
-    context['schema'] = schema
-    result = up_func(context, data_dict)
-    return result
-
-
-@p.toolkit.chained_action
 def resource_view_update(up_func, context, data_dict):
     model = context['model']
     resource_view = model.ResourceView.get(data_dict['id'])
