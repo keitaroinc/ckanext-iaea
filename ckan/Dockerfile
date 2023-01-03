@@ -56,11 +56,31 @@ RUN pip install -e "git+https://github.com/keitaroinc/ckanext-dataexplorer-react
 RUN pip install -e "git+https://github.com/ckan/ckanext-dcat.git@v1.3.0#egg=ckanext-dcat" && \
     pip install -r ./src/ckanext-dcat/requirements-py2.txt
 
+# ckanext-report
+RUN pip install -e "git+https://github.com/ckan/ckanext-report.git#egg=ckanext-report" && \
+    pip install -r ./src/ckanext-report/requirements.txt
+
+# ckanext-archiver
+RUN pip install -e "git+http://github.com/ckan/ckanext-archiver.git#egg=ckanext-archiver" && \
+    pip install -r ./src/ckanext-archiver/requirements.txt
+
+# ckanext-qa
+RUN pip install -e "git+http://github.com/keitaroinc/ckanext-qa.git@qa-iaea#egg=ckanext-qa" && \
+    pip install -r ./src/ckanext-qa/requirements.txt
+
+# ckanext-validation
+RUN pip install -e "git+https://github.com/keitaroinc/ckanext-validation.git@ckan-2.8.2#egg=ckanext-validation" && \
+    pip install -r ./src/ckanext-validation/requirements.txt
+
+# ckanext-scheming
+RUN pip install --exists-action=w -e "git+https://github.com/keitaroinc/ckanext-scheming.git@ckan-2.8#egg=ckanext-scheming"
+
 # Create folder for local extensions sources
 RUN mkdir $SRC_EXTENSIONS_DIR
 RUN mkdir $IAEA_EXTENSION_DIR
 
 COPY setup/start_ckan_development.sh ${APP_DIR}
+COPY setup/start_ckan_worker.sh ${APP_DIR}
 
 
 CMD ["/srv/app/start_ckan_development.sh"]
