@@ -1,0 +1,18 @@
+{
+    "scheming_presets_version": 1,
+    "about": "Additional presets for IAEA schema",
+    "about_url": "http://github.com/keitaroinc/ckanext-iaea",
+    "presets": [{
+        "preset_name": "not_displayed",
+        "values": {
+          "validators": "ignore_missing",
+          "form_snippet": "snippets/form/hidden.html"
+        }
+    }, {
+        "preset_name": "iaea_dataset_organization",
+        "values": {
+            "validators": "owner_org_validator unicode iaea_owner_org_validator",
+            "form_snippet": "snippets/form/organization.html"
+        }
+    }]
+}
