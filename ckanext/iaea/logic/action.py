@@ -2,8 +2,9 @@ import logging
 import ckan.lib.datapreview as datapreview
 import ckan.logic as l
 import ckan.plugins as p
-
 from ckan.logic.schema import default_create_resource_view_schema, default_update_resource_view_schema
+
+from ckanext.iaea.helpers import get_main_organization
 
 log = logging.getLogger(__name__)
 

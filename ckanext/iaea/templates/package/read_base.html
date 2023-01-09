@@ -71,6 +71,7 @@
     <div class="col-xs-4 right-content">
       <div class="pull-right" style="margin-top: 20px;">
         {% block title_and_actions_right_side %}
+        {% if pkg.organization %}
         {% set org = h.get_organization(pkg.organization.name) %}
         {% set url_org = h.url_for(pkg.organization.type + '_read', id=pkg.organization.name, ) %}
         <div class="table-valign" style="width: 100%;">
@@ -81,6 +82,7 @@
             </a>
           </div>
         </div>
+        {% endif %}
         {% endblock %}
       </div>
     </div>

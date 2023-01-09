@@ -2,7 +2,7 @@ import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 import ckan.logic as logic
 from ckan.lib.plugins import DefaultTranslation
-from ckanext.iaea.logic import action
+from ckanext.iaea.logic import action, validators
 from flask import Blueprint
 from ckanext.iaea import view
 import ckan.model as model
@@ -72,6 +72,7 @@ class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IDatasetForm)
     plugins.implements(plugins.IActions)
+    plugins.implements(plugins.IValidators)
     plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.ITemplateHelpers, inherit=True)
 
@@ -119,8 +120,15 @@ class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
     def get_actions(self):
         return {
             'resource_view_create': action.resource_view_create,
-            'resource_view_update': action.resource_view_update
+            'resource_view_update': action.resource_view_update,
         }
+
+    # IValidators
+    def get_validators(self):
+        return {
+            'iaea_owner_org_validator': validators.package_organization_validator,
+        }
+
     # IBlueprint
     def get_blueprint(self):
         blueprint = Blueprint(self.name, self.__module__)

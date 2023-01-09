@@ -23,6 +23,21 @@ To build the images:
 docker compose build
 ```
 
+
+## Configuration
+
+You should set CKAN auth option to allow for datasets without organization:
+```
+ckan.auth.create_unowned_dataset = true
+```
+
+### Optional
+
+```
+# Main organization name for the portal. Default value is 'iaea'
+ckanext.iaea.main_organization=iaea
+```
+
 ## Run the full portal
 To start the containers:
 
