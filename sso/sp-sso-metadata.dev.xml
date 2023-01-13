@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="https://data-dev.iaea.org">
+  <md:SPSSODescriptor AuthnRequestsSigned="true" WantAssertionsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <md:KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>MIIDvzCCAqegAwIBAgIUNYBCRA1O1IZIgYUG3RjpPSHh8l8wDQYJKoZIhvcNAQELBQAwbzELMAkGA1UEBhMCQVQxEDAOBgNVBAgMB0F1c3RyaWExDzANBgNVBAcMBlZpZW5uYTEhMB8GA1UECgwYSW50ZXJuZXQgV2lkZ2l0cyBQdHkgTHRkMRowGAYDVQQDDBFkYXRhLWRldi5pYWVhLm9yZzAeFw0yMzAxMTcxNTM5MzhaFw0yNDAxMTcxNTM5MzhaMG8xCzAJBgNVBAYTAkFUMRAwDgYDVQQIDAdBdXN0cmlhMQ8wDQYDVQQHDAZWaWVubmExITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDEaMBgGA1UEAwwRZGF0YS1kZXYuaWFlYS5vcmcwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDm6qw/jK2yueyWTT9AGP6zUfcgkeGDJnsRuIBjrMtz2p3d7yv8v3pQSprR0O6sgwXE5hyU7r8R5TE/E4a5WexJM5boSqS4bAKb2VfRnKyHxo+BKBsGkTa3rVs+o4SWh5VBsfmd9frssNFWjh2BeM+IsUB6XAdEqtxh4VxjJ7PCyAaYwtCyJXNULZ2Lw9Ctkh6S/M+LXPQzDQ8fVZO0vH8fF3Oy2T/whmFe+nFbPcq93rL+z4FFEVyKFxi2NeMGMI7XY9fl5DlQDsR6rVUzwQNBxL1O4wzeQ7G/TZElhgJeIZtoJppwUy0H4r7ZtTMFnf2HHzsiLgvUFgPf0XQzkeA3AgMBAAGjUzBRMB0GA1UdDgQWBBSkdA7TuMPRx3jRGV0iLwJm84EhGDAfBgNVHSMEGDAWgBSkdA7TuMPRx3jRGV0iLwJm84EhGDAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCYBu/2hXsGEqhHOqKctvMd+C5jQ9zzp8scjUzVeaUKkRQ8rIbiLX3RLvUQYNZXRYeLOz0nJucHFbRh4GLzqwqa9MhcLz+/J31JH4Ou/Y/xJeOa+Ex6Wecfr1DOfDBSPz1reDyW3/lO8Yu2MIn7n63b4vDfBYAQ1DwzBwRSBTR80tnxyZECfqiDMHIjnNfa0046scG6pB/8HzOed2NOeOVAZuMdSCawaXYz1NLcXpdCxkZ0fmWpssK9o/KJUcUYzlzaTHhI72DD1xu2h0g1HmkZ+3i0uFrnvHf7bWm5CugMPpQCvMu5n+Cywn4LD2cYeXy9/iIksHffuRrvHWQejBOy</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+    <md:KeyDescriptor use="encryption">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>MIIDvzCCAqegAwIBAgIUNYBCRA1O1IZIgYUG3RjpPSHh8l8wDQYJKoZIhvcNAQELBQAwbzELMAkGA1UEBhMCQVQxEDAOBgNVBAgMB0F1c3RyaWExDzANBgNVBAcMBlZpZW5uYTEhMB8GA1UECgwYSW50ZXJuZXQgV2lkZ2l0cyBQdHkgTHRkMRowGAYDVQQDDBFkYXRhLWRldi5pYWVhLm9yZzAeFw0yMzAxMTcxNTM5MzhaFw0yNDAxMTcxNTM5MzhaMG8xCzAJBgNVBAYTAkFUMRAwDgYDVQQIDAdBdXN0cmlhMQ8wDQYDVQQHDAZWaWVubmExITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDEaMBgGA1UEAwwRZGF0YS1kZXYuaWFlYS5vcmcwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDm6qw/jK2yueyWTT9AGP6zUfcgkeGDJnsRuIBjrMtz2p3d7yv8v3pQSprR0O6sgwXE5hyU7r8R5TE/E4a5WexJM5boSqS4bAKb2VfRnKyHxo+BKBsGkTa3rVs+o4SWh5VBsfmd9frssNFWjh2BeM+IsUB6XAdEqtxh4VxjJ7PCyAaYwtCyJXNULZ2Lw9Ctkh6S/M+LXPQzDQ8fVZO0vH8fF3Oy2T/whmFe+nFbPcq93rL+z4FFEVyKFxi2NeMGMI7XY9fl5DlQDsR6rVUzwQNBxL1O4wzeQ7G/TZElhgJeIZtoJppwUy0H4r7ZtTMFnf2HHzsiLgvUFgPf0XQzkeA3AgMBAAGjUzBRMB0GA1UdDgQWBBSkdA7TuMPRx3jRGV0iLwJm84EhGDAfBgNVHSMEGDAWgBSkdA7TuMPRx3jRGV0iLwJm84EhGDAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCYBu/2hXsGEqhHOqKctvMd+C5jQ9zzp8scjUzVeaUKkRQ8rIbiLX3RLvUQYNZXRYeLOz0nJucHFbRh4GLzqwqa9MhcLz+/J31JH4Ou/Y/xJeOa+Ex6Wecfr1DOfDBSPz1reDyW3/lO8Yu2MIn7n63b4vDfBYAQ1DwzBwRSBTR80tnxyZECfqiDMHIjnNfa0046scG6pB/8HzOed2NOeOVAZuMdSCawaXYz1NLcXpdCxkZ0fmWpssK9o/KJUcUYzlzaTHhI72DD1xu2h0g1HmkZ+3i0uFrnvHf7bWm5CugMPpQCvMu5n+Cywn4LD2cYeXy9/iIksHffuRrvHWQejBOy</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://data-dev.iaea.org/user/logout"/>
+    <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://data-dev.iaea.org/sso/post" index="1"/>
+  </md:SPSSODescriptor>
+</md:EntityDescriptor>
