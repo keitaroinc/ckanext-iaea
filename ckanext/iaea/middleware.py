@@ -11,7 +11,8 @@ class RestrictMiddleware(object):
             status = u'404 Not Found'
             location = u'/user/login'
             headers = [(u'Location',location), (u'Content-type', u'text/plain')]
+            body='Not authorized to see this page'
             start_response (status, headers)  
-            return[]
+            return[body]
         else:
             return self.app(environ, start_response)
