@@ -6,6 +6,7 @@ from ckanext.iaea.logic import action, validators
 from flask import Blueprint
 from ckanext.iaea import view
 import ckan.model as model
+import ckanext.iaea.middleware as middleware 
 
 from ckanext.iaea.helpers import get_helpers
 
@@ -75,6 +76,8 @@ class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
     plugins.implements(plugins.IValidators)
     plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.ITemplateHelpers, inherit=True)
+    plugins.implements(plugins.IMiddleware, inherit=True)
+
 
     # IDatasetForm
     def update_package_schema(self):
@@ -137,3 +140,8 @@ class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
         blueprint.add_url_rule(u'/dataset/metadata/<id>', view_func=view.metadata)
         blueprint.add_url_rule(u'/dataset/<id>/view', view_func=view.FeatureView.as_view(str(u'feature_view')))
         return blueprint
+
+
+    def make_middleware(self, app, config):
+
+        return middleware.RestrictMiddleware(app, config)
