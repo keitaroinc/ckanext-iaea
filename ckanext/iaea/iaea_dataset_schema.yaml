@@ -109,6 +109,7 @@ resource_fields:
 - field_name: format
   label: Format
   preset: resource_format_autocomplete
+  validators: if_empty_guess_format ignore_missing clean_format unicode
 
 - field_name: schema
   label: Schema
