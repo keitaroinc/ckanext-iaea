@@ -2,7 +2,7 @@
   width: 100%;
 }
 #json_schema_clear_button{
-  margin-right:25px;
+  margin-right: 25px;
 }
 /* This section is because the css for json resource is overwriten in ckanext-geoview with different iconset*/
 .format-label[data-format=json], 
