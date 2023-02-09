@@ -36,6 +36,11 @@ ckan.auth.create_unowned_dataset = true
 ```
 # Main organization name for the portal. Default value is 'iaea'
 ckanext.iaea.main_organization=iaea
+
+# Allow only editors and admins within this organization to be able to create datasets.
+# All other users will be restricted.
+# By default this is not set, and that means the CKAN standard auth applies for dataset creation.
+ckanext.iaea.allow_dataset_create_from_organization=
 ```
 
 ## Run the full portal

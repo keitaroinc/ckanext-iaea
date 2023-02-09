@@ -3,6 +3,7 @@ import ckan.plugins.toolkit as toolkit
 import ckan.logic as logic
 from ckan.lib.plugins import DefaultTranslation
 from ckanext.iaea.logic import action, validators
+import ckanext.iaea.logic.auth as ia
 from flask import Blueprint
 from ckanext.iaea import view
 import ckan.model as model
@@ -77,6 +78,7 @@ class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
     plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.ITemplateHelpers, inherit=True)
     plugins.implements(plugins.IMiddleware, inherit=True)
+    plugins.implements(plugins.IAuthFunctions)
 
 
     # IDatasetForm
@@ -141,6 +143,10 @@ class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
         blueprint.add_url_rule(u'/dataset/<id>/view', view_func=view.FeatureView.as_view(str(u'feature_view')))
         return blueprint
 
+
+    # IAuthFunctions
+    def get_auth_functions(self):
+        return {'package_create': ia.package_create}
 
     def make_middleware(self, app, config):
 
