@@ -72,21 +72,7 @@
       endtrans %}</p>
     {% endblock %}
     {% block footer_lang %}
-    {% set current_lang = request.environ.CKAN_LANG %}
-      <form class="form-inline form-select lang-select" action="{% url_for controller='util', action='redirect' %}" data-module="select-switch" method="POST">
-        <label for="field-lang-select">{{ _('Language') }}</label>
-        <select id="field-lang-select" name="url" data-module="autocomplete" data-module-dropdown-class="lang-dropdown" data-module-container-class="lang-container">
-          {% set locale_option = ["en", "fr", "ru", "es", "ar", "zh_Hans_CN"] %}
-          {% for locale in h.get_available_locales() %}
-          {% if locale.short_name in locale_option %}
-            <option value="{% url_for h.current_url(), locale=locale.short_name %}" {% if locale.identifier == current_lang %}selected="selected"{% endif %}>
-              {{ locale.display_name or locale.english_name }}
-            </option>
-          {% endif %}
-          {% endfor %}
-        </select>
-        <button class="btn btn-default js-hide" type="submit">{{ _('Go') }}</button>
-      </form>
+      {% snippet "snippets/language_selector.html" %}
     {% endblock %}
   </div>
 </div>
