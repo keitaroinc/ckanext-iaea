@@ -1,4 +1,4 @@
-FROM solr:6.2-alpine
+FROM solr:6.5.1-alpine
 MAINTAINER Open Knowledge
 
 # Enviroment
@@ -27,4 +27,6 @@ https://raw.githubusercontent.com/apache/lucene-solr/releases/lucene-solr/6.6.6/
 RUN echo name=$SOLR_CORE > /opt/solr/server/solr/$SOLR_CORE/core.properties
 
 # Giving ownership to Solr
-RUN chown -R $SOLR_USER:$SOLR_USER /opt/solr/server/solr/$SOLR_CORE
+RUN chown -R solr:solr /opt/solr/server/solr/$SOLR_CORE
+
+USER solr
