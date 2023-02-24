@@ -7,7 +7,8 @@ import ckanext.iaea.logic.auth as ia
 from flask import Blueprint
 from ckanext.iaea import view
 import ckan.model as model
-import ckanext.iaea.middleware as middleware 
+import ckanext.iaea.middleware as middleware
+import ckanext.iaea.profiler as profiler
 
 from ckanext.iaea.helpers import get_helpers
 
@@ -110,6 +111,7 @@ class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'iaea')
+        profiler.setup_query_profiler()
 
     def get_helpers(self):
         iaea_helpers = {
