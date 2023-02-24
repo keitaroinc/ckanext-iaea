@@ -1,5 +1,5 @@
 import { fail } from "k6";
-import {CKANAdmin, CKANUser} from './ckan.js';
+import { CKANAdmin, CKANUser } from './ckan.js';
 
 const BASE_URL = __ENV.BASE_URL || 'https://data-dev.iaea.org';
 const POLITENESS_DELAY = __ENV.POLITENESS_DELAY ? parseInt(__ENV.POLITENESS_DELAY) : 0;
@@ -8,7 +8,7 @@ const CKAN_TEST_USERS_PREFIX = __ENV.CKAN_TEST_USERS_PREFIX || 'test_user';
 const CKAN_TEST_USERS_NUMBER = __ENV.CKAN_TEST_USERS_NUMBER ? parseInt(__ENV.CKAN_TEST_USERS_NUMBER) : 10;
 const CKAN_TEST_USERS_ORG = __ENV.CKAN_TEST_USERS_ORG || 'load_test_org';
 const CKAN_TEST_CSV_FILE_PREFIX = __ENV.CKAN_TEST_CSV_FILE_PREFIX || 'test_file';
-const CKAN_TEST_CSV_FILE_NUMBER = __ENV.CKAN_TEST_CSV_FILE_PREFIX ? parseInt(__ENV.CKAN_TEST_CSV_FILE_PREFIX) : 10;
+const CKAN_TEST_CSV_FILE_NUMBER = __ENV.CKAN_TEST_CSV_FILE_NUMBER ? parseInt(__ENV.CKAN_TEST_CSV_FILE_NUMBER) : 10;
 
 
 if (!CKAN_ADMIN_TOKEN) {
@@ -16,7 +16,7 @@ if (!CKAN_ADMIN_TOKEN) {
 }
 
 const FILES = [];
-
+console.log('CKAN_TEST_CSV_FILE_NUMBER=', CKAN_TEST_CSV_FILE_NUMBER)
 for(let i = 0; i < CKAN_TEST_CSV_FILE_NUMBER; i++) {
   const fileName = `/home/k6/run/${CKAN_TEST_CSV_FILE_PREFIX}_${i+1}.csv`;
   FILES.push({
@@ -25,16 +25,16 @@ for(let i = 0; i < CKAN_TEST_CSV_FILE_NUMBER; i++) {
   })
 }
 
-
 export const options = {
+  setupTimeout: "10m",
   scenarios: {
     stress: {
       executor: "ramping-vus",
       startVUs: 0,
       gracefulRampDown: "5m",
       stages: [
-        { duration: "1m", target: 10 }, // Ramp up to all concurrent users
-        { duration: "9m", target: 10 }, // Hold
+        { duration: "1s", target: 1 }, // Ramp up to all concurrent users
+        { duration: "1m", target: 1 }, // Hold
         { duration: "1m", target: 0 },  // scale down. Recovery stage.
       ],
     },
@@ -52,14 +52,34 @@ export function setup() {
     console.log(`Created user: ${user.id}`);
     users.push(user);
   }
+
+  const datasets = users.map(user => {
+    const ckanUser = new CKANUser(BASE_URL, user.apikey, CKAN_TEST_USERS_ORG);
+    const dataset = ckanUser.createDataset();
+    for(let i = 0; i < 2; i++) {
+      // choose random file
+      const file = FILES[Math.floor(Math.random() * FILES.length)];
+      ckanUser.createResource(dataset.id, `${user.name}-${i+1}.csv`, file.fileData);
+    }
+    console.log(`Created dataset: ${dataset.id}`)
+    return dataset;
+  })
+
+  console.log('Tests setup complete.')
   return {
     users: users,
-    //organization: org,
+    datasets: datasets,
   };
 }
 
 export function teardown(data) {
   const admin = new CKANAdmin(BASE_URL, CKAN_ADMIN_TOKEN, CKAN_TEST_USERS_ORG);
+  console.log('Clearing datasets')
+  data.datasets.forEach(dataset => {
+    admin.purgeDataset(dataset.id);
+    console.log(`Purged: ${dataset.id}`)
+  })
+  
   console.log("Clearing users")
   data.users.forEach(user => {
     admin.deleteUser(user.id);
@@ -68,21 +88,25 @@ export function teardown(data) {
 }
 
 export default function (data) {
-  const user = data.users[Math.floor(Math.random()*data.users.length)];
+  const user = data.users[Math.floor(Math.random() * data.users.length)];
   const ckanUser = new CKANUser(BASE_URL, user.apikey, CKAN_TEST_USERS_ORG);
-  const admin = new CKANAdmin(BASE_URL, CKAN_ADMIN_TOKEN, CKAN_TEST_USERS_ORG);
-  const dataset = ckanUser.createDataset();
-  console.log(`Created dataset: ${dataset.id}`);
-  
-  try{
-    for(let i = 0; i < 5; i++) {
-      ckanUser.createResource(dataset.id, `resource-${i+1}.csv`, FILES[Math.floor(Math.random()*CKAN_TEST_CSV_FILE_NUMBER)].fileData);
-    }
-  }catch(e) {
-    console.error(e);
-  }
 
-  admin.deleteDataset(dataset.id);
-  admin.purgeDataset(dataset.id);
-  console.log(`Purged dataset: ${dataset.id}`);
+  ckanUser.listDatasets();
+
+  for(let i = 0; i < data.datasets.length/2; i++) {
+    // choose random dataset to visit
+    const dataset = data.datasets[Math.floor(Math.random() * data.datasets.length)];
+    const resultDataset = ckanUser.packageShow(dataset.id);
+    resultDataset.resources.forEach(rc => {
+      const resultResource = ckanUser.resourceShow(rc.id);
+      console.log('Resource datastore:', resultResource.datastore_active)
+      if (resultResource.datastore_active) {
+        // Get the data from datastore
+        ckanUser.datastoreSearch(resultResource.id);
+      } else {
+        // Data is not yet in the datastore, so fetch the data directly as download.
+        ckanUser.downloadResource(resultResource.url);
+      }
+    })
+  }
 }

@@ -36,6 +36,14 @@ def _check_dataset_write_actions_restricted(next_auth, context, data_dict):
 
     return res
 
+def get_allowed_organizations_ids():
+    allowed_orgs = config.get('ckanext.iaea.allow_dataset_create_from_organization') or ''
+    allowed_orgs = [o.strip() for o in allowed_orgs.strip().split(',') if o.strip()]
+
+    if not allowed_orgs:
+        return []
+    return get_organization_ids(allowed_orgs)
+
 def user_has_sufficient_roles_in_org(user_id, org_ids, roles):
     q = (model.Session.query(model.Member.group_id)
         .filter(model.Member.state=='active')
@@ -50,4 +58,4 @@ def get_organization_ids(org_names_ids):
         .filter(or_(model.Group.id.in_(org_names_ids), model.Group.name.in_(org_names_ids)))
         .filter(model.Group.state == 'active')
         .filter(model.Group.type == 'organization'))
-    return [org_id for org_id in q]
+    return [org_id[0] for org_id in q]
