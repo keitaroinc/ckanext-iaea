@@ -7,7 +7,12 @@ import ckanext.iaea.logic.auth as ia
 from flask import Blueprint
 from ckanext.iaea import view
 import ckan.model as model
-import ckanext.iaea.middleware as middleware 
+import ckanext.iaea.middleware as middleware
+from ckan.model.meta import engine
+from threading import Thread, Event
+import signal
+import sys
+
 
 from ckanext.iaea.helpers import get_helpers
 
@@ -110,6 +115,7 @@ class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'iaea')
+        start_conn_pool_ping()
 
     def get_helpers(self):
         iaea_helpers = {
@@ -151,3 +157,42 @@ class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
     def make_middleware(self, app, config):
 
         return middleware.RestrictMiddleware(app, config)
+
+
+def start_conn_pool_ping():
+
+    class ConnPoolKeepalive(Thread):
+
+        def __init__(self, *args, **kwargs):
+            super(ConnPoolKeepalive, self).__init__(*args, **kwargs)
+            self._exit = Event()
+
+        def end_keepalive(self):
+            self._exit.set()
+
+        def run(self):
+            while True:
+                with engine.connect() as conn:
+                    conn.execute('SELECT 1').scalar()
+                if self._exit.wait(1):
+                    print('**Exited')
+                    return
+
+    t = ConnPoolKeepalive()
+    t.start()
+
+    handlers = {}
+
+    def handle_signal(sig, frame):
+        t.end_keepalive()
+        if handlers.get(sig):
+            handlers[sig](sig, frame)
+
+
+    def trap_signal(*args):
+        for sig in args:
+            handler = signal.signal(sig, handle_signal)
+            if handler:
+                handlers[sig] = handler
+
+    trap_signal(signal.SIGINT)
