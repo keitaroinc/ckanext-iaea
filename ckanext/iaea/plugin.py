@@ -12,9 +12,14 @@ from ckan.model.meta import engine
 from threading import Thread, Event
 import signal
 import sys
+from logging import getLogger
 
 
 from ckanext.iaea.helpers import get_helpers
+
+
+logger = getLogger(__name__)
+
 
 def package_activity_html(id):
     activity =  logic.get_action(
@@ -116,6 +121,7 @@ class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'iaea')
         start_conn_pool_ping()
+        logger.info('Config updated')
 
     def get_helpers(self):
         iaea_helpers = {
@@ -178,9 +184,10 @@ def start_conn_pool_ping():
                     print('**Exited')
                     return
 
+    logger.info('Starting manual connection pool refresh.')
     t = ConnPoolKeepalive()
     t.start()
-
+    logger.info('Started manual connection pool refresh.')
     handlers = {}
 
     def handle_signal(sig, frame):
@@ -196,3 +203,4 @@ def start_conn_pool_ping():
                 handlers[sig] = handler
 
     trap_signal(signal.SIGINT)
+    logger.info('Trapped sigint signal for shutdown.')
