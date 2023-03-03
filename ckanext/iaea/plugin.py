@@ -13,6 +13,7 @@ from threading import Thread, Event
 import signal
 import sys
 from logging import getLogger
+import os
 
 
 from ckanext.iaea.helpers import get_helpers
@@ -120,7 +121,10 @@ class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'iaea')
-        start_conn_pool_ping()
+        if os.getenv('CKAN_POOL_KEEPALIVE'):
+            start_conn_pool_ping()
+        else:
+            logger.info('Not starting connection pool ping.')
         logger.info('Config updated')
 
     def get_helpers(self):
