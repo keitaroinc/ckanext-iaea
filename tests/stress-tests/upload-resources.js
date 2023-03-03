@@ -71,83 +71,6 @@ class CKANAdmin {
     return resp.json('result');
   }
 
-  showOrganization(orgName) {
-    const resp = http.post(this.getActionUrl('organization_show'), JSON.stringify({
-      id: orgName,
-    }), {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': this.apiToken,
-      }
-    })
-    if (resp.status != 200) {
-      if (resp.status == 404) {
-        return null;
-      }
-      fail(`Failed to get organization: ${resp.body}`)
-    }
-    return resp.json('result');
-  }
-
-  createOrganization(orgName) {
-    const resp = http.post(this.getActionUrl('organization_create'), JSON.stringify({
-      name: orgName,
-    }), {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': this.apiToken,
-      }
-    })
-    if (resp.status != 200) {
-      fail(`Failed to create organization: ${resp.body}`)
-    }
-    return resp.json('result');
-  }
-
-  organizationPurge(orgName) {
-    const resp = http.post(this.getActionUrl('organization_purge'), JSON.stringify({
-      id: orgName,
-    }), {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': this.apiToken,
-      }
-    })
-    if (resp.status != 200) {
-      fail(`Failed to create organization: ${resp.body}`)
-    }
-    return resp.json('result');
-  }
-
-  getOrganizationDatasets(orgName) {
-    const resp = http.post(this.getActionUrl('organization_show'), JSON.stringify({
-      id: orgName,
-      include_datasets: true,
-    }), {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': this.apiToken,
-      }
-    })
-    if (resp.status != 200) {
-      fail(`Failed to create organization: ${resp.body}`)
-    }
-    return resp.json('result');
-  }
-
-  getOrCreateOrg(orgName) {
-    const org = this.showOrganization(orgName);
-    if (!org) {
-      return this.createOrganization(orgName);
-    }
-    return org;
-  }
-
-  clearOrg(orgName) {
-    const datasets = this.getOrganizationDatasets(orgName);
-    console.log('Datasets->', datasets)
-  }
-
   addUserToOrg(userName, orgName) {
     const resp = http.post(this.getActionUrl('organization_member_create'), JSON.stringify({
       id: orgName,
@@ -297,8 +220,6 @@ export const options = {
 export function setup() {
   console.log(`Testing URL: ${BASE_URL}, (politeness delay: ${POLITENESS_DELAY || 'none'}).`)
   const admin = new CKANAdmin(BASE_URL, CKAN_ADMIN_TOKEN);
-
-  //const org = admin.getOrCreateOrg(CKAN_TEST_USERS_ORG)
 
   console.log("Creating test users")
   const users = [];

@@ -185,7 +185,6 @@ def start_conn_pool_ping():
                 with engine.connect() as conn:
                     conn.execute('SELECT 1').scalar()
                 if self._exit.wait(1):
-                    print('**Exited')
                     return
 
     logger.info('Starting manual connection pool refresh.')

@@ -1,4 +1,5 @@
 from sqlalchemy.sql import exists
+from sqlalchemy import or_
 
 import ckan.model as model
 import ckan.plugins as p
@@ -15,17 +16,19 @@ def _check_dataset_write_actions_restricted(next_auth, context, data_dict):
     if not res.get('success'):
         return res
 
-    allowed_org = config.get('ckanext.iaea.allow_dataset_create_from_organization')
-    if not allowed_org or not allowed_org.strip():
+    allowed_orgs = config.get('ckanext.iaea.allow_dataset_create_from_organization') or ''
+    allowed_orgs = [o.strip() for o in allowed_orgs.strip().split(',') if o.strip()]
+
+    if not allowed_orgs:
         return res
 
     user = context.get('auth_user_obj')
     if user:
-        org_id = get_organization_id(allowed_org)
-        if org_id is None:
+        org_ids = get_organization_ids(allowed_orgs)
+        if not org_ids:
             return res
         
-        if not user_has_sufficient_roles_in_org(user.id, org_id, ['editor', 'admin']):
+        if not user_has_sufficient_roles_in_org(user.id, org_ids, ['editor', 'admin']):
             return {
                 'success': False,
                 'message': _('User {} cannot create datasets.').format(user.name),
@@ -33,20 +36,18 @@ def _check_dataset_write_actions_restricted(next_auth, context, data_dict):
 
     return res
 
-def user_has_sufficient_roles_in_org(user_id, org_id, roles):
+def user_has_sufficient_roles_in_org(user_id, org_ids, roles):
     q = (model.Session.query(model.Member.group_id)
         .filter(model.Member.state=='active')
         .filter(model.Member.table_name=='user')
-        .filter(model.Member.group_id == org_id)
+        .filter(model.Member.group_id.in_(org_ids))
         .filter(model.Member.table_id == user_id)
         .filter(model.Member.capacity.in_(roles))).exists()
     return model.Session.query(q).scalar()
 
-def get_organization_id(org_name_id):
+def get_organization_ids(org_names_ids):
     q = (model.Session.query(model.Group.id)
-        .filter(model.Group.id == org_name_id or model.Group.name == org_name_id)
+        .filter(or_(model.Group.id.in_(org_names_ids), model.Group.name.in_(org_names_ids)))
         .filter(model.Group.state == 'active')
         .filter(model.Group.type == 'organization'))
-    for org_id in q:
-        return org_id
-    return None
+    return [org_id for org_id in q]
