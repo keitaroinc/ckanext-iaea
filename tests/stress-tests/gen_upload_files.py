@@ -19,7 +19,7 @@ def gen_csv_file(filename, col_number, file_size):
             content_size += len(row)
             row_count += 1
             f.write(row)
-    print '{}, size: {}, rows: {}'.format(filename, content_size, row_count)
+    print ('{}, size: {}, rows: {}'.format(filename, content_size, row_count))
 
 
 def gen_files(file_prefix, num_files, col_number, file_size):
