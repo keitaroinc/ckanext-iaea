@@ -21,7 +21,7 @@ the datasets might remain on the site. The datasets will be put into this organi
 after the load test, they could be easily purged from the load test organization.
 
 To create the organization, login to the portal as an admin, then create new organzation by opening `/organization` page on the
-site and clicking on "Add Organization".
+site and clicking on "Add Organization". Name your organization "load_test".
 
 > **NOTE:** Make sure you put `load_test` as the name for the organization. If you choose different name, please update the `ORG_NAME` variable in `run_tests.sh` script.
 
