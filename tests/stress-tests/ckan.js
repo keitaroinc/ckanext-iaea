@@ -147,7 +147,7 @@ export class CKANAdmin {
     createDataset() {
       const resp = http.post(this.getActionUrl('package_create'), JSON.stringify({
         name: `dataset-${uuidv4()}`,
-        private: false,
+        private: true,
         owner_org: `${this.usersOrg}`,
         license_id: 'gfdl',
       }), {

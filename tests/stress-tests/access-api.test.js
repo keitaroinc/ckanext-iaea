@@ -9,6 +9,7 @@ const CKAN_TEST_USERS_NUMBER = __ENV.CKAN_TEST_USERS_NUMBER ? parseInt(__ENV.CKA
 const CKAN_TEST_USERS_ORG = __ENV.CKAN_TEST_USERS_ORG || 'load_test_org';
 const CKAN_TEST_CSV_FILE_PREFIX = __ENV.CKAN_TEST_CSV_FILE_PREFIX || 'test_file';
 const CKAN_TEST_CSV_FILE_NUMBER = __ENV.CKAN_TEST_CSV_FILE_NUMBER ? parseInt(__ENV.CKAN_TEST_CSV_FILE_NUMBER) : 10;
+const CONCURRENT_USERS = __ENV.CONCURRENT_USERS || 10;
 
 
 if (!CKAN_ADMIN_TOKEN) {
@@ -16,7 +17,6 @@ if (!CKAN_ADMIN_TOKEN) {
 }
 
 const FILES = [];
-console.log('CKAN_TEST_CSV_FILE_NUMBER=', CKAN_TEST_CSV_FILE_NUMBER)
 for(let i = 0; i < CKAN_TEST_CSV_FILE_NUMBER; i++) {
   const fileName = `/home/k6/run/${CKAN_TEST_CSV_FILE_PREFIX}_${i+1}.csv`;
   FILES.push({
@@ -33,8 +33,8 @@ export const options = {
       startVUs: 0,
       gracefulRampDown: "5m",
       stages: [
-        { duration: "1s", target: 1 }, // Ramp up to all concurrent users
-        { duration: "1m", target: 1 }, // Hold
+        { duration: "1m", target: CONCURRENT_USERS }, // Ramp up to all concurrent users
+        { duration: "9m", target: CONCURRENT_USERS }, // Hold
         { duration: "1m", target: 0 },  // scale down. Recovery stage.
       ],
     },
@@ -42,7 +42,7 @@ export const options = {
 };
 
 export function setup() {
-  console.log(`Testing URL: ${BASE_URL}, (politeness delay: ${POLITENESS_DELAY || 'none'}).`)
+  console.log(`Testing URL: ${BASE_URL}, concurrent users: ${CONCURRENT_USERS} (politeness delay: ${POLITENESS_DELAY || 'none'}).`)
   const admin = new CKANAdmin(BASE_URL, CKAN_ADMIN_TOKEN, CKAN_TEST_USERS_ORG);
 
   console.log("Creating test users")
@@ -99,7 +99,6 @@ export default function (data) {
     const resultDataset = ckanUser.packageShow(dataset.id);
     resultDataset.resources.forEach(rc => {
       const resultResource = ckanUser.resourceShow(rc.id);
-      console.log('Resource datastore:', resultResource.datastore_active)
       if (resultResource.datastore_active) {
         // Get the data from datastore
         ckanUser.datastoreSearch(resultResource.id);
