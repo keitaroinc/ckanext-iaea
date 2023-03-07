@@ -4,6 +4,7 @@ import ckan.lib.navl.dictization_functions as df
 from ckan.common import _
 
 from ckanext.iaea.helpers import get_main_organization
+from ckanext.iaea.logic.auth import get_allowed_organizations_ids
 
 
 def package_organization_validator(value, context):
@@ -26,7 +27,9 @@ def package_organization_validator(value, context):
     if not package:
         # Check that the current owner_org is the main owner_org
         if value.lower() != main_org.get('name').lower() and value.lower() != main_org.get('id').lower():
-            raise df.Invalid(_('The dataset owner organization must be {} or empty').format(main_org.get('name')))
+            # Check if we can allow from additional organizations for load testing, but only if specified
+            if value not in get_allowed_organizations_ids():
+                raise df.Invalid(_('The dataset owner organization must be {} or empty').format(main_org.get('name')))
 
     if package and main_org:
         new_org = _get_organization(value)

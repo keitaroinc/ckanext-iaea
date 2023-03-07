@@ -7,9 +7,21 @@ import ckanext.iaea.logic.auth as ia
 from flask import Blueprint
 from ckanext.iaea import view
 import ckan.model as model
-import ckanext.iaea.middleware as middleware 
+import ckanext.iaea.middleware as middleware
+from ckan.model.meta import engine
+from threading import Thread, Event
+import signal
+import sys
+from logging import getLogger
+import os
+
+import ckanext.iaea.profiler as profiler
 
 from ckanext.iaea.helpers import get_helpers
+
+
+logger = getLogger(__name__)
+
 
 def package_activity_html(id):
     activity =  logic.get_action(
@@ -111,6 +123,16 @@ class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'iaea')
 
+        if os.getenv('CKAN_POOL_KEEPALIVE'):
+            start_conn_pool_ping()
+        else:
+            logger.info('Not starting connection pool ping.')
+
+        if os.getenv('CKAN_QUERY_PROFILER_ENABLED'):
+            profiler.setup_query_profiler()
+        else:
+            logger.info('Query profiler not enabled')
+
     def get_helpers(self):
         iaea_helpers = {
             'featured_group': featured_group,
@@ -151,3 +173,53 @@ class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
     def make_middleware(self, app, config):
 
         return middleware.RestrictMiddleware(app, config)
+
+
+def start_conn_pool_ping():
+    from ckanext.datastore.backend.postgres import get_read_engine, get_write_engine
+
+
+    class ConnPoolKeepalive(Thread):
+
+        def __init__(self, *args, **kwargs):
+            super(ConnPoolKeepalive, self).__init__(*args, **kwargs)
+            self._exit = Event()
+
+        def end_keepalive(self):
+            self._exit.set()
+
+        def run(self):
+            while True:
+                try:
+                    with engine.connect() as conn:
+                        conn.execute('SELECT 1').scalar()
+                except Exception as e:
+                    logger.error('Error in CKAN conn pool refresh: {}'.format(e))
+                try:
+                    get_read_engine().execute('SELECT 1').scalar()
+                    get_write_engine().execute('SELECT 1').scalar()
+                except Exception as e:
+                    logger.error('Error in CKAN DataStore conn pool refresh: {}'.format(e))
+                if self._exit.wait(1):
+                    return
+
+    logger.info('Starting manual connection pool refresh.')
+    t = ConnPoolKeepalive()
+    t.start()
+    logger.info('Started manual connection pool refresh.')
+    handlers = {}
+
+    def handle_signal(sig, frame):
+        t.end_keepalive()
+        if handlers.get(sig):
+            handlers[sig](sig, frame)
+
+
+    def trap_signal(*args):
+        for sig in args:
+            handler = signal.signal(sig, handle_signal)
+            if handler:
+                handlers[sig] = handler
+
+    trap_signal(signal.SIGINT)
+    logger.info('Trapped sigint signal for shutdown.')
