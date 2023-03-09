@@ -9,7 +9,7 @@ const CKAN_TEST_USERS_NUMBER = __ENV.CKAN_TEST_USERS_NUMBER ? parseInt(__ENV.CKA
 const CKAN_TEST_USERS_ORG = __ENV.CKAN_TEST_USERS_ORG || 'load_test_org';
 const CKAN_TEST_CSV_FILE_PREFIX = __ENV.CKAN_TEST_CSV_FILE_PREFIX || 'test_file';
 const CKAN_TEST_CSV_FILE_NUMBER = __ENV.CKAN_TEST_CSV_FILE_PREFIX ? parseInt(__ENV.CKAN_TEST_CSV_FILE_PREFIX) : 10;
-
+const CONCURRENT_USERS = __ENV.CONCURRENT_USERS ? parseInt(__ENV.CONCURRENT_USERS) : 10;
 
 if (!CKAN_ADMIN_TOKEN) {
   fail('Please set the CKAN_ADMIN_TOKEN')
@@ -33,16 +33,16 @@ export const options = {
       startVUs: 0,
       gracefulRampDown: "5m",
       stages: [
-        { duration: "1m", target: 10 }, // Ramp up to all concurrent users
-        { duration: "9m", target: 10 }, // Hold
-        { duration: "1m", target: 0 },  // scale down. Recovery stage.
+        { duration: "1m", target: CONCURRENT_USERS }, // Ramp up to all concurrent users
+        { duration: "9m", target: CONCURRENT_USERS }, // Hold
+        { duration: "1m", target: 0 },                // scale down. Recovery stage.
       ],
     },
   },
 };
 
 export function setup() {
-  console.log(`Testing URL: ${BASE_URL}, (politeness delay: ${POLITENESS_DELAY || 'none'}).`)
+  console.log(`Testing URL: ${BASE_URL} with ${CONCURRENT_USERS} concurrent users (politeness delay: ${POLITENESS_DELAY || 'none'}).`)
   const admin = new CKANAdmin(BASE_URL, CKAN_ADMIN_TOKEN, CKAN_TEST_USERS_ORG);
 
   console.log("Creating test users")

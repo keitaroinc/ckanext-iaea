@@ -1,5 +1,7 @@
 CONCURRENT_USERS=( 30 50 100 )
+CONCURRENT_USERS_FILES_UPLOAD=( 1 5 10 )
 ORG_NAME="load_test"
+SLEEP_TIME=180
 
 echo "== Running stress and load tests =="
 if [ -z "${SITE_URL}" ]; then
@@ -41,17 +43,26 @@ echo ":: Test users visiting the site done."
 echo ""
 
 echo ":: Testing parallel upload of files"
-docker run -it --network host \
-    --volume $(pwd):/home/k6/run \
-    grafana/k6 run --insecure-skip-tls-verify \
-        --env BASE_URL="${SITE_URL}" \
-        --env CKAN_ADMIN_TOKEN="${ADMIN_TOKEN}" \
-        --env CKAN_TEST_USERS_ORG="${ORG_NAME}" \
+for users_count in "${CONCURRENT_USERS_FILES_UPLOAD[@]}"; do
+    echo ":: Running scenario with ${users_count} users."
+    docker run -it --network host \
+        --volume $(pwd):/home/k6/run \
+        grafana/k6 run --insecure-skip-tls-verify \
+            --env BASE_URL="${SITE_URL}" \
+            --env CKAN_ADMIN_TOKEN="${ADMIN_TOKEN}" \
+            --env CKAN_TEST_USERS_ORG="${ORG_NAME}" \
+            --env CONCURRENT_USERS="${users_count}" \
         run/upload-resources.test.js
+    echo ":: Upload files scenario done."
+    echo ":: Pausing for ${SLEEP_TIME} seconds between tests..."
+    sleep ${SLEEP_TIME}
+done
 echo ":: Testing of parallel upload of files done."
 echo ""
 
 echo ":: Testing API calls to fetch data"
+echo ":: Pausing again for ${SLEEP_TIME} to give time to recover from previous tests."
+sleep ${SLEEP_TIME}
 for users_count in "${CONCURRENT_USERS[@]}"; do
     echo ":: Running scenario with ${users_count} users."
     docker run -it --network host \
@@ -63,5 +74,7 @@ for users_count in "${CONCURRENT_USERS[@]}"; do
             --env CONCURRENT_USERS="${users_count}" \
             --env CKAN_TEST_CSV_FILE_PREFIX="smaller_file" \
             run/access-api.test.js
+    echo ":: Pausing for ${SLEEP_TIME} seconds between tests..."
+    sleep ${SLEEP_TIME}
 done
 echo ":: Test API calls to fetch data done."
