@@ -1,0 +1,14 @@
+.resource-view-field-filter .select2-container-multi {
+  width: 100%;
+}
+#json_schema_clear_button{
+  margin-right: 25px;
+}
+/* This section is because the css for json resource is overwriten in ckanext-geoview with different iconset*/
+.format-label[data-format=json], 
+.format-label[data-format*=json] {
+  width: 32px;
+  height: 35px;
+  background-position: -288px -62px;
+  background-image:url("/base/images/sprite-resource-icons.png") !important;
+}

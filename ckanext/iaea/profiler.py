@@ -5,7 +5,7 @@ import logging
 import traceback
 import json
 import os
-from Queue import Queue
+from queue import Queue
 from threading import Thread, Event
 
 logger = logging.getLogger("profiler.sqlalchemy")

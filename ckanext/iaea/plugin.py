@@ -122,6 +122,7 @@ class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'iaea')
+        toolkit.add_resource('assets', 'iaea')
 
         if os.getenv('CKAN_POOL_KEEPALIVE'):
             start_conn_pool_ping()

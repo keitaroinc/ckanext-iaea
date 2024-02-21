@@ -9,9 +9,11 @@
 {% endblock %}
 
 {%- block styles %}
-    {% if h.is_rtl_language() %}
-        {% resource 'iaea/main-rtl-css' %}
+   
+     {% if h.is_rtl_language() %}
+        {% asset 'iaea/iaea-rtl-css' %}
     {% else %}
-        {% resource 'iaea/main_css' %}
+         {% asset 'iaea/iaea-js' %}
+         {% asset 'iaea/iaea-style' %}
     {% endif %}
 {% endblock %}

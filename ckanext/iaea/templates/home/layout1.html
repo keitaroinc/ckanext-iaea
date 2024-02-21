@@ -18,7 +18,7 @@
           </p>
           {% endif %}
           <div class="main-search">
-            <form class="search-form" method="get" action="{% url_for controller='package', action='search' %}">
+            <form class="search-form" method="get" action="{% url_for 'dataset.search' %}">
               <div class="search-input form-group ">
                 <input aria-label="{% block header_site_search_label %}{{ _('Search datasets') }}{% endblock %}"
                   id="field-main-search" type="text" class="form-control" name="q" value="" autocomplete="off"
@@ -32,7 +32,7 @@
           <div class="popular-tag">
             <p>Popular Tags: &nbsp;
               {% for tag in tags %}
-              <a class="tag" href="{% url_for controller='package', action='search', tags=tag.name %}">{{
+              <a class="tag" href="{% url_for 'dataset.search', tags=tag.name %}">{{
                 h.truncate(tag.display_name, 22) }}</a> &nbsp;
               {% endfor %}
             </p>

@@ -1,0 +1,15 @@
+iaea-js:
+  filter: rjsmin
+  output: iaea/iaea.js
+  contents:
+    - js/iaea-custom.js
+  extra:
+    preload:
+      - base/main
+
+iaea-style:
+  output: iaea/iaea.css
+  contents:
+    - css/main.css
+    - css/iaea-custom.css
+    - css/dataexplorer.css
