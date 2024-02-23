@@ -48,6 +48,10 @@ To temporary patch the CKAN configuration for the duration of a test you can use
         pass
 """
 import ckanext.iaea.plugin as plugin
+import pytest
 
+@pytest.mark.ckan_config("ckan.plugins", "iaea")
+@pytest.mark.usefixtures("with_plugins")
 def test_plugin():
+    # assert plugin_loaded("iaea")
     pass

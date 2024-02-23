@@ -1,8 +1,9 @@
-[![Tests](https://github.com/keitaroinc/ckanext-iaea/workflows/Tests/badge.svg?branch=main)](https://github.com/keitaroinc/ckanext-iaea/actions)
+[![Tests](https://github.com/keitaroinc/ckanext-iaea/workflows/Tests/badge.svg?branch=main)](https://github.com/keitaroinc/ckanext-iaea/actions/workflows/test.yml)
+[![CKAN](https://img.shields.io/badge/ckan-2.9-orange.svg?style=flat-square)](https://github.com/ckan/ckan)
 
 # ckanext-iaea
 
-**TODO:** Put a description of your extension here:  What does it do? What features does it have? Consider including some screenshots or embedding a video!
+A custom CKAN extension for International Atomic Energy Agency (IAEA) data portal.
 
 
 ## Requirements
@@ -19,21 +20,12 @@ Compatibility with core CKAN versions:
 | 2.6 and earlier | not tested    |
 | 2.7             | not tested    |
 | 2.8             | not tested    |
-| 2.9             | not tested    |
+| 2.9             | Yes           |
+| 2.10            | Yes           |
 
-Suggested values:
-
-* "yes"
-* "not tested" - I can't think of a reason why it wouldn't work
-* "not yet" - there is an intention to get it working
-* "no"
 
 
 ## Installation
-
-**TODO:** Add any additional install steps to the list below.
-   For example installing any non-Python dependencies or adding any required
-   config settings.
 
 To install ckanext-iaea:
 
