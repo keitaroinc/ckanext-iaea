@@ -1,0 +1,14 @@
+# iaea-js:
+#   filter: rjsmin
+#   output: ckanext-iaea/%(version)s-iaea.js
+#   contents:
+#     - js/iaea.js
+#   extra:
+#     preload:
+#       - base/main
+
+# iaea-css:
+#   filter: cssrewrite
+#   output: ckanext-iaea/%(version)s-iaea.css
+#   contents:
+#     - css/iaea.css
