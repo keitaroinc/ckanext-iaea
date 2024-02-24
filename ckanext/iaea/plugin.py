@@ -2,12 +2,14 @@ import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 from ckan.lib.plugins import DefaultTranslation
 from ckanext.iaea.helpers import get_helpers
+from ckanext.iaea.logic import action, validators
 
 
 class IaeaPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.ITemplateHelpers, inherit=True)
+    plugins.implements(plugins.IValidators)
 
     # IConfigurer
 
@@ -28,3 +30,8 @@ class IaeaPlugin(plugins.SingletonPlugin, DefaultTranslation):
         iaea_helpers.update(get_helpers())
         return iaea_helpers
 
+    # IValidators
+    def get_validators(self):
+        return {
+            'iaea_owner_org_validator': validators.package_organization_validator,
+        }
