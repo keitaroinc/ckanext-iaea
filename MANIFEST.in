@@ -2,5 +2,4 @@ include README.rst
 include LICENSE
 include requirements.txt
 recursive-include ckanext/iaea *.html *.json *.js *.less *.css *.mo *.yml *.yaml *.config *.png *.jpeg *.svg *.po *.pot *.jpg *.map *.eot *.svg *.ttf *.woff *.woff2
- 
 recursive-include ckanext/iaea/migration *.ini *.py *.mako
