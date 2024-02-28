@@ -1,0 +1,52 @@
+$primary-color: #3366cc;
+$primary-light-color: #edf3f8;
+$secondary-color: #fa991c;
+$tertiary-color: #faf3f1;
+$text-primary: #032539;
+$neutral: #fbf3f2;
+$white: white;
+
+$bold: bolder;
+$bold-size: larger;
+$xxl-size: xx-large;
+$xxxl-size: xxx-large;
+
+$primary: $primary-color !default;
+$primary-light: $primary-light-color !default;
+
+$secondary: $secondary-color !default;
+
+$theme-colors: () !default;
+$theme-colors: map-merge(
+  (
+    "primary": $primary,
+    "primary-dark": $ibasis-primary-dark-1,
+    "primary-light": $ibasis-primary-light-3,
+    "primary-lighter": $ibasis-primary-light-4,
+    "secondary": $secondary,
+    "secondary-dark": $secondary-dark,
+    "secondary-light": $ibasis-secondary-light-3,
+    "secondary-lighter": $ibasis-secondary-light-4,
+    "tertiary": $purple,
+    "success": $success,
+    "success-light": $success-light,
+    "info": $info,
+    "warning": $warning,
+    "danger": $danger,
+    "danger-light": $danger-light,
+    "light": $light,
+    "dark": $dark,
+    "action": $ibasis-neutral-light-1,
+    "neutral": $neutral,
+    "neutral-light": $ibasis-neutral-light-3,
+    "neutral-muted": $neutral-muted,
+    "neutral-dark": $neutral-dark,
+    "success-pale": $success-pale,
+    "selected": $ibasis-neutral-light-2,
+    "flat": $ibasis-flat-rate,
+    "list-item": $list-item,
+    "list-item-pale": $list-item-pale,
+    "excel-heading": $ibasis-excel-header,
+  ),
+  $theme-colors
+);
