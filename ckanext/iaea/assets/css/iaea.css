@@ -10094,7 +10094,7 @@ body {
   margin-top: 20px;
 }
 .hero {
-  background: url("/images/hero.jpg");
+  background: url("ckanext/iaea/public/images/hero.jpg");
 }
 .hero .overlay {
   background-blend-mode: overlay;
