@@ -18,13 +18,13 @@
           </p>
           {% endif %}
           <div class="main-search">
-            <form class="section site-search simple-input" action="{% url_for 'dataset.search' %}" method="get">
+            <form class="search-form" action="{% url_for 'dataset.search' %}" method="get">
               <div class="search-input form-group ">
                 <input aria-label="{% block header_site_search_label %}{{ _('Search datasets') }}{% endblock %}"
                   id="field-main-search" type="text" class="form-control" name="q" value="" autocomplete="off"
                   placeholder="{% block search_placeholder %}{{ _('Search datasets') }}{% endblock %}" />
                 <button type="submit">
-                  <i class="fa fa-search"></i> {{ _('Search') }}
+                  <i class="fa fa-search fa-lg"></i>
                 </button>
               </div>
             </form>

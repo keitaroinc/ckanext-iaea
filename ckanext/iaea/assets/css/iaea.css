@@ -10176,16 +10176,18 @@ body {
   padding: 0;
   border: none;
   background: #2d60c6;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 .hero-content .main-search .search-form .search-input button:hover {
   background: #2c5aaf;
 }
 .hero-content .main-search .search-form .search-input button i.fa {
-  display: none;
+  /* display: none; */
   color: #fff;
   padding: 0px 2px;
+  width: 20px;
+  height: 20px;
 }
 .hero-content .popular-tag {
   font-weight: 400;
