@@ -43,3 +43,24 @@
   </div>
 </div>
 </div>
+
+ <!-- After the feature groups are fully implemented, the code for the Topics section, from line 49 to line 66 has to be modified, as it currently is on the master branch. -->
+
+<div role="main">
+  <div class="container">
+    <div class="row row1 group-feature">
+      {% block featured_group %}
+      <div class="title">
+        <h1> Topics</h1>
+      </div>
+      <a href="{{ url }}"/>
+      <div class="col-xs-3 col-md-3">
+        <div class="group-feature-item">
+          <img class="media-image img-responsive">
+        </div>
+      </div>
+      </a>
+      {% endblock %}
+    </div>
+  </div>
+</div>
