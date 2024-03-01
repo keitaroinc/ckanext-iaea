@@ -32,7 +32,7 @@
           <div class="popular-tag">
             <p>Popular Tags: &nbsp;
               {% for tag in tags %}
-              <a class="tag" href="{% url_for controller='package', action='search', tags=tag.name %}">{{
+              <a class="tag" href="{% url_for 'dataset.search', tags=tag.name %}">{{
                 h.truncate(tag.display_name, 22) }}</a> &nbsp;
               {% endfor %}
             </p>
