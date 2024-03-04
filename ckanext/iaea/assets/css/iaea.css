@@ -3157,7 +3157,7 @@ fieldset[disabled] a.btn {
 .btn-default {
   color: #3366cc;
   background-color: #edf3f8;
-  border-color: #e1ebf3;
+  border-color: #ced4da;
 }
 .btn-default:focus,
 .btn-default.focus {
@@ -3532,6 +3532,9 @@ fieldset[disabled] .btn-link:focus {
 }
 .btn-block + .btn-block {
   margin-top: 5px;
+}
+.btn-border {
+  border: 1px solid #ced4da;
 }
 input[type="submit"].btn-block,
 input[type="reset"].btn-block,
@@ -9720,9 +9723,11 @@ body {
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 .wrapper {
-  position: relative;
-  min-height: 300px;
-  background-color: #fff;
+  position: relative !important;
+  min-height: 300px !important;
+  background-color: #fff !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 .wrapper:before,
 .wrapper:after {
@@ -9766,10 +9771,14 @@ body {
   [role="main"],
   .main {
     padding-top: 10px;
+    padding-bottom: 50px;
   }
 }
-[role="main"] {
-  min-height: 350px;
+[role="main"],
+.main {
+  /* min-height: 350px;
+  border: 2px solid red; */
+  min-height: 0px;
 }
 .main:after,
 [role="main"]:after {
@@ -9867,7 +9876,7 @@ body {
   }
   .hero .overlay {
     background-blend-mode: overlay;
-    background: linear-gradient(0deg, #4f80e4 0%, rgba(79, 128, 228, 0) 100%);
+    background: rgba(255, 255, 255, 0.5);
   }
   .hero .overlay::before {
     content: "";
@@ -9877,7 +9886,7 @@ body {
     top: auto;
     bottom: 0;
     width: 100%;
-    background: linear-gradient(0deg, #4f80e4 0%, rgba(79, 128, 228, 0) 100%);
+    background: rgba(255, 255, 255, 0.5);
   }
 }
 .context-info .module-content {
@@ -10098,7 +10107,7 @@ body {
 }
 .hero .overlay {
   background-blend-mode: overlay;
-  background: linear-gradient(0deg, #3366cc 0%, rgba(79, 128, 228, 0) 100%);
+  background: rgba(0, 0, 0, 0.5);
 }
 .hero .overlay::before {
   content: "";
@@ -10108,7 +10117,7 @@ body {
   top: auto;
   bottom: 0;
   width: 100%;
-  background: linear-gradient(0deg, #3366cc 0%, rgba(79, 128, 228, 0) 100%);
+  background: rgba(0, 0, 0, 0.5);
 }
 @media (min-width: 768px) {
   .hero {
@@ -10116,7 +10125,7 @@ body {
   }
   .hero .overlay {
     background-blend-mode: overlay;
-    background: linear-gradient(0deg, #3366cc 0%, rgba(79, 128, 228, 0) 100%);
+    background: rgba(0, 0, 0, 0.5);
   }
   .hero .overlay::before {
     content: "";
@@ -10126,7 +10135,7 @@ body {
     top: auto;
     bottom: 0;
     width: 100%;
-    background: linear-gradient(0deg, #3366cc 0%, rgba(79, 128, 228, 0) 100%);
+    background: rgba(0, 0, 0, 0.5);
   }
 }
 .hero-content {
@@ -10137,10 +10146,12 @@ body {
   font-size: 40px;
   font-weight: 600;
   margin-top: 0;
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 }
 .hero-content p {
   font-size: 18px;
   font-weight: 300;
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 }
 .hero-content .title {
   font-size: 40px;
@@ -10442,6 +10453,7 @@ body {
   color: #42526e;
   border: 0;
   background: #fff;
+  padding: 0;
 }
 .masthead:before,
 .masthead:after {
