@@ -53,13 +53,20 @@
       <div class="title">
         <h1> Topics</h1>
       </div>
-      <a href="{{ url }}"/>
+      {% for group in h.featured_group() %}
+      {% set type = group.type or 'group' %}
+      {% set url = h.url_for(type ~ '_read', action = 'read', id = group.name) %}
+      <a href="{{ url }}" title="{{ _('View {name}').format(name=group.display_name) }}" />
       <div class="col-xs-3 col-md-3">
         <div class="group-feature-item">
-          <img class="media-image img-responsive">
+          <img src="{{ group.image_display_url or h.url_for_static('/base/images/placeholder-group.png') }}"
+            alt="{{ group.name }}" class="media-image img-responsive">
+          <h3>{{group.title or group.display_name}}</h3>
+          <p>{{ h.markdown_extract(group.description)|urlize |truncate(135) }}</p>
         </div>
       </div>
       </a>
+      {% endfor%}
       {% endblock %}
     </div>
   </div>
