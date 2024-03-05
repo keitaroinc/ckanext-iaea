@@ -1,5 +1,5 @@
 {% block header_wrapper %} {% block header_account %}
-<div class="account-masthead">
+<header class="account-masthead">
   <div class="container">
     {% block header_account_container_content %} {% if c.userobj %}
     <div class="pull-left">
@@ -82,6 +82,7 @@
       </ul>
     </div>
     {% else %}
+    <!-- After the SSO is fully implemented, the code for the nav, from line 86 to line 97 has to be modified, as it currently is on the master branch. -->
     <nav class="account not-authed" aria-label="{{ _('Account') }}">
       <ul class="list-unstyled">
         {% block header_account_notlogged %}
@@ -96,7 +97,7 @@
     </nav>
     {% endif %} {% endblock %}
   </div>
-</div>
+</header>
 {% endblock %}
 
 <header class="navbar navbar-static-top masthead">
@@ -152,8 +153,8 @@
         <nav class="section navigation">
           <ul class="nav nav-pills">
             {% block header_site_navigation_tabs %} {{ h.build_nav_main(
-            ('organization.index', _('Topics')), ('dataset.search',
-            _('Datasets'))) }} {% endblock %}
+            ('group.index', _('Topics')), ('dataset.search', _('Datasets'))) }}
+            {% endblock %}
           </ul>
         </nav>
         <div class="navbar-right">
