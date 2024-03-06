@@ -14,66 +14,54 @@ RUN echo $TZ > /etc/timezone
 # Install packages needed by the dev requirements
 RUN apk add --no-cache libffi-dev
 
-# Install CKAN dev requirements
-#RUN pip install --no-binary :all: -r https://raw.githubusercontent.com/ckan/ckan/${GIT_BRANCH}/dev-requirements.txt
+# # Install CKAN dev requirements
+# #RUN pip install --no-binary :all: -r https://raw.githubusercontent.com/ckan/ckan/${GIT_BRANCH}/dev-requirements.txt
 RUN pip install flask-debugtoolbar
 
 
 # Install CKAN extensions
-RUN pip install -e "git+https://github.com/ckan/ckanext-pdfview.git@0.0.7#egg=ckanext-pdfview" && \
-    pip install -e git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages
 
-# Install ckanext-harvest
-RUN pip install -e git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest
-RUN pip install -r ./src/ckanext-harvest/requirements.txt
+RUN pip install -e "git+https://github.com/keitaroinc/ckanext-xloader@rewrite-site-url#egg=ckanext-xloader" && \
+    pip install -r "./src/ckanext-xloader/requirements.txt"
 
-# ckanext-autz-service
-RUN pip install -e git+https://github.com/datopian/ckanext-authz-service.git#egg=ckanext-authz-service && \
-    pip install -r ./src/ckanext-authz-service/requirements.py2.txt
+RUN pip install -e "git+https://github.com/keitaroinc/ckanext-validation@iaea-2.9#egg=ckanext-validation" && \
+    pip install -r "./src/ckanext-validation/requirements.txt"
 
-# ckanext-sentry
-RUN pip install -e git+https://github.com/okfn/ckanext-sentry.git#egg=ckanext-sentry && \
-    pip install -r ./src/ckanext-sentry/requirements.txt
+RUN pip install -e "git+https://github.com/ckan/ckanext-report#egg=ckanext-report" && \
+    pip install -r "./src/ckanext-report/requirements.txt"
 
-# ckanext-basiccharts
-RUN pip install -e git+https://github.com/ckan/ckanext-basiccharts.git#egg=ckanext-basiccharts
+RUN pip install -e "git+https://github.com/ckan/ckanext-archiver#egg=ckanext-archiver" && \
+    sed -i '/ckanext-report/d' "./src/ckanext-archiver/requirements.txt" && \
+    pip install -r "./src/ckanext-archiver/requirements.txt"
 
-# ckanext-visualize
-RUN pip install -e git+https://github.com/datopian/ckanext-visualize.git#egg=ckanext-visualize && \
-    pip install -r ./src/ckanext-visualize/requirements.txt
+RUN pip install -e "git+https://github.com/keitaroinc/ckanext-qa@qa-iaea#egg=ckanext-qa" && \
+    pip install -r "./src/ckanext-qa/requirements.txt"
 
-# ckanext-geoview
-RUN pip install -e "git+https://github.com/keitaroinc/ckanext-geoview.git@iaea#egg=ckanext-geoview"
+RUN pip install -e "git+https://github.com/keitaroinc/ckanext-harvest@montreal-fix#egg=ckanext-harvest" && \
+    pip install -r "./src/ckanext-harvest/pip-requirements.txt"
 
-RUN pip install -e "git+https://github.com/ckan/ckanext-pages.git@v0.3.7#egg=ckanext-pages" && \
-    pip install -r ./src/ckanext-pages/requirements.txt
+RUN pip install -e "git+https://github.com/keitaroinc/ckanext-basiccharts@iaea#egg=ckanext-basiccharts"
 
-# ckanext-dataexplorer-react
-RUN pip install -e "git+https://github.com/keitaroinc/ckanext-dataexplorer-react.git@iaea#egg=ckanext-dataexplorer-react" && \
-    pip install -r ./src/ckanext-dataexplorer-react/requirements.txt
+RUN pip install -e "git+https://github.com/keitaroinc/ckanext-visualize#egg=ckanext-visualize" && \
+    pip install -r "./src/ckanext-visualize/requirements.txt"
 
-# ckanext-dcat
-RUN pip install -e "git+https://github.com/ckan/ckanext-dcat.git@v1.3.0#egg=ckanext-dcat" && \
-    pip install -r ./src/ckanext-dcat/requirements-py2.txt
+RUN pip install -e "git+https://github.com/keitaroinc/ckanext-pdfview#egg=ckanext-pdfview"
 
-# ckanext-report
-RUN pip install -e "git+https://github.com/ckan/ckanext-report.git#egg=ckanext-report" && \
-    pip install -r ./src/ckanext-report/requirements.txt
+RUN pip install -e "git+https://github.com/ckan/ckanext-geoview@v0.1.0#egg=ckanext-geoview"
 
-# ckanext-archiver
-RUN pip install -e "git+http://github.com/ckan/ckanext-archiver.git#egg=ckanext-archiver" && \
-    pip install -r ./src/ckanext-archiver/requirements.txt
+RUN pip install -e "git+https://github.com/ckan/ckanext-pages@v0.5.2#egg=ckanext-pages" && \
+    pip install -r "./src/ckanext-pages/requirements.txt"
 
-# ckanext-qa
-RUN pip install -e "git+http://github.com/keitaroinc/ckanext-qa.git@qa-iaea#egg=ckanext-qa" && \
-    pip install -r ./src/ckanext-qa/requirements.txt
+RUN pip install -e "git+https://github.com/datopian/ckanext-dataexplorer-react#egg=ckanext-dataexplorer-react" && \
+    pip install -r "./src/ckanext-dataexplorer-react/requirements.txt"
 
-# ckanext-validation
-RUN pip install -e "git+https://github.com/keitaroinc/ckanext-validation.git@ckan-2.8.2#egg=ckanext-validation" && \
-    pip install -r ./src/ckanext-validation/requirements.txt
+RUN pip install -e "git+https://github.com/ckan/ckanext-dcat@v1.5.1#egg=ckanext-dcat" && \
+    pip install -r "./src/ckanext-dcat/requirements.txt"
 
-# ckanext-scheming
-RUN pip install --exists-action=w -e "git+https://github.com/keitaroinc/ckanext-scheming.git@ckan-2.8#egg=ckanext-scheming"
+RUN pip install -e "git+https://github.com/ckan/ckanext-scheming@release-3.0.0#egg=ckanext-scheming"
+
+RUN pip install -e "git+https://github.com/keitaroinc/ckanext-saml2auth@ckan-2.9-iaea#egg=ckanext-saml2auth"
+
 
 # Create folder for local extensions sources
 RUN mkdir $SRC_EXTENSIONS_DIR
@@ -81,6 +69,8 @@ RUN mkdir $IAEA_EXTENSION_DIR
 
 COPY setup/start_ckan_development.sh ${APP_DIR}
 COPY setup/start_ckan_worker.sh ${APP_DIR}
+COPY ckan.ini ${APP_DIR}
 
 
 CMD ["/srv/app/start_ckan_development.sh"]
+#CMD ["sleep", "10000"]

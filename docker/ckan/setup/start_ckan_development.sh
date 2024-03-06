@@ -27,7 +27,7 @@ do
         if [ -f $i/setup.py ];
         then
             cd $i
-            python $i/setup.py develop
+            python3 $i/setup.py develop
             echo "Found setup.py file in $i"
             cd $APP_DIR
         fi
@@ -36,25 +36,25 @@ do
         if [ -f $i/test.ini ];
         then
             echo "Updating \`test.ini\` reference to \`test-core.ini\` for plugin $i"
-            paster --plugin=ckan config-tool $i/test.ini "use = config:../../src/ckan/test-core.ini"
+            ckan config-tool $i/test.ini "use = config:../../src/ckan/test-core.ini"
         fi
     fi
 done
 
 # Set debug to true
 echo "Enabling debug mode"
-paster --plugin=ckan config-tool $CKAN_INI -s DEFAULT "debug = true"
+ckan config-tool $CKAN_INI -s DEFAULT "debug = true"
 
 # Update the plugins setting in the ini file with the values defined in the env var
 echo "Loading the following plugins: $CKAN__PLUGINS"
-paster --plugin=ckan config-tool $CKAN_INI "ckan.plugins = $CKAN__PLUGINS"
-paster --plugin=ckan config-tool $CKAN_INI "ckan.views.default_views = $CKAN__VIEWS__DEFAULT_VIEWS"
+ckan config-tool $CKAN_INI "ckan.plugins = $CKAN__PLUGINS"
+ckan config-tool $CKAN_INI "ckan.views.default_views = $CKAN__VIEWS__DEFAULT_VIEWS"
 
-paster --plugin=ckan config-tool $CKAN_INI "ckan.site_url = $CKAN_SITE_URL"
+ckan config-tool $CKAN_INI "ckan.site_url = $CKAN_SITE_URL"
 
 # Update test-core.ini DB, SOLR & Redis settings
 echo "Loading test settings into test-core.ini"
-paster --plugin=ckan config-tool $SRC_DIR/ckan/test-core.ini \
+ckan config-tool $SRC_DIR/ckan/test-core.ini \
     "sqlalchemy.url = $TEST_CKAN_SQLALCHEMY_URL" \
     "ckan.datastore.write_url = $TEST_CKAN_DATASTORE_WRITE_URL" \
     "ckan.datastore.read_url = $TEST_CKAN_DATASTORE_READ_URL" \
@@ -62,13 +62,13 @@ paster --plugin=ckan config-tool $SRC_DIR/ckan/test-core.ini \
     "ckan.redis.url = $TEST_CKAN_REDIS_URL"
 
 # Run the prerun script to init CKAN and create the default admin user
-sudo -u ckan -EH python prerun.py
+python3 prerun.py
 
 echo "Running DB init scripts"
-paster --plugin=ckanext-archiver archiver init --config="$CKAN_INI"
-paster --plugin=ckanext-report report initdb --config="$CKAN_INI"
-paster --plugin=ckanext-qa qa init --config="$CKAN_INI"
-paster --plugin=ckanext-validation validation init-db --config="$CKAN_INI"
+# paster --plugin=ckanext-archiver archiver init --config="$CKAN_INI"
+# paster --plugin=ckanext-report report initdb --config="$CKAN_INI"
+# paster --plugin=ckanext-qa qa init --config="$CKAN_INI"
+# paster --plugin=ckanext-validation validation init-db --config="$CKAN_INI"
 echo "Init DB scripts completed."
 
 # Run any startup scripts provided by images extending this one
@@ -77,7 +77,7 @@ then
     for f in /docker-entrypoint.d/*; do
         case "$f" in
             *.sh)     echo "$0: Running init file $f"; . "$f" ;;
-            *.py)     echo "$0: Running init file $f"; python "$f"; echo ;;
+            *.py)     echo "$0: Running init file $f"; python3 "$f"; echo ;;
             *)        echo "$0: Ignoring $f (not an sh or py file)" ;;
         esac
         echo
@@ -88,4 +88,4 @@ fi
 # supervisord --configuration /etc/supervisord.conf &
 
 # Start the development server with automatic reload
-sudo -u ckan -EH paster serve --reload $CKAN_INI
+ckan -c "${CKAN_INI}" run
