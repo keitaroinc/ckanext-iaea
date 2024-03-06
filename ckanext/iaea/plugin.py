@@ -3,6 +3,21 @@ import ckan.plugins.toolkit as toolkit
 from ckan.lib.plugins import DefaultTranslation
 from ckanext.iaea.helpers import get_helpers
 from ckanext.iaea.logic import action, validators
+import ckan.logic as logic
+import ckan.model as model
+
+
+def featured_group():
+    try:
+        group_list = logic.get_action('group_list')(
+            {}, {'sort': 'package_count', 'all_fields': True})
+        if group_list: 
+            return group_list
+        else:
+            return logic.get_action('group_list')(
+                {}, {'all_fields': True})
+    except (logic.NotFound, logic.ValidationError, logic.NotAuthorized):
+        return {}
 
 
 class IaeaPlugin(plugins.SingletonPlugin, DefaultTranslation):
@@ -22,7 +37,7 @@ class IaeaPlugin(plugins.SingletonPlugin, DefaultTranslation):
         
     def get_helpers(self):
         iaea_helpers = {
-            # 'featured_group': featured_group,
+            'featured_group': featured_group,
             # 'package_activity_html': package_activity_html,
             # 'suggested_filter_fields_serializer': suggested_filter_fields_serializer,
             # 'featured_view_url': featured_view_url,
