@@ -71,6 +71,10 @@ def get_main_organization():
     except tk.ObjectNotFound:
         return None
 
+##The code from line 76 to line 77 has to be added for the data portal style for the Arabic group of languages
+
+def is_rtl_language():
+    return lang() in config.get('ckan.i18n.rtl_languages', 'he ar fa_IR').split()
 
 def get_helpers():
     return {
