@@ -1422,7 +1422,7 @@ a.bg-danger:focus {
 }
 ul,
 ol {
-  margin-top: -10px !important;
+  margin-top: 0px;
   margin-bottom: 10px;
 }
 ul ul,

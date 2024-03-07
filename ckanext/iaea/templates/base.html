@@ -1,5 +1,4 @@
 {% ckan_extends %} {% block links %} {{ super() }} {% block
 googleanalytics_header %} {{ h.iaea_ga_header() }} {% endblock %} {% endblock %}
-{% block styles %} {{ super() }} {% if h.is_rtl_language() %} {% asset
-'iaea/rtl-css' %} {% else %} {% asset 'iaea/iaea-css' %} {% endif %} {% endblock
-%}
+{% block styles %} {% if h.is_rtl_language() %} {% asset 'iaea/rtl-css' %} {%
+else %} {% asset 'iaea/iaea-css' %} {% endif %} {% endblock %}
