@@ -143,10 +143,6 @@ input::-moz-focus-inner {
 input {
   line-height: normal;
 }
-input::placeholder {
-  /* color: red; */
-  padding: 10px !important;
-}
 input[type="checkbox"],
 input[type="radio"] {
   box-sizing: border-box;
