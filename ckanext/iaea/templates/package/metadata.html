@@ -1,0 +1,6 @@
+{% extends "package/read_base.html" %}
+{# Reuse of activity template for additonal info#}
+
+{% block primary_content_inner %}
+{% snippet "package/snippets/additional_info.html", pkg_dict=pkg %}
+{% endblock %}
