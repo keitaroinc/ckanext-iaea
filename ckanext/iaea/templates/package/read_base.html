@@ -133,12 +133,19 @@
   {% block secondary_help_content %}
     <div class="module context-info">
       <div class="module-content">
-        <h1 class="heading">{{ _('Activity') }}</h1>
+        <h1 class="heading">{{ _('Dataset Info') }} </h1>
         <div class="nums"></div>
       </div>  
     </div>
-  {#{ h.package_activity_html(pkg.id) | safe }#}
   {% endblock %}
+
+{% block package_info %}
+  {% snippet 'package/snippets/info.html', pkg=pkg %}
+{% endblock %}
+
+{% block package_license %}
+  {% snippet "snippets/license.html", pkg_dict=pkg %}
+{% endblock %}
   
   {% block package_organization %}
     {% if pkg.organization %}
@@ -147,13 +154,6 @@
     {% endif %}
   {% endblock %}
 
-
-  {% block package_info %}
-
-  {% endblock %}
-
-  {% block package_license %}
-  {% endblock %}
   </div>
 {% endblock %}
 
