@@ -73,4 +73,3 @@ COPY ckan.ini ${APP_DIR}
 
 
 CMD ["/srv/app/start_ckan_development.sh"]
-#CMD ["sleep", "10000"]

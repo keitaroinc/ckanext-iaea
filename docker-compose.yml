@@ -2,6 +2,7 @@ version: "3"
 
 services:
   ckan:
+    profiles: ["full"]
     build:
       context: docker/ckan/
       dockerfile: Dockerfile
