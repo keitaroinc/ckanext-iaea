@@ -1,4 +1,160 @@
 {% ckan_extends %}
+
+{% block subtitle %}{{ h.dataset_display_name(pkg) }} - {{ super() }}{% endblock %}
+
+{% block head_extras -%}
+  {{ super() }}
+  {% set description = h.markdown_extract(pkg.notes, extract_length=200)|forceescape %}
+  <meta property="og:title" content="{{ h.dataset_display_name(pkg) }} - {{ g.site_title }}">
+  <meta property="og:description" content="{{ description|forceescape|trim }}">
+{% endblock -%}
+
+
+
+{% block content_action %}
+  {% if h.check_access('package_update', {'id':pkg.id }) %}
+    {% link_for _('Manage'), controller='dataset', action='edit', id=pkg.name, class_='btn btn-default', icon='wrench' %}
+  {% endif %}
+{% endblock %}
+
+{% block content_primary_nav %}
+  {{ h.build_nav_icon('dataset_read', _('Dataset'), id=pkg.name) }}
+  {{ h.build_nav_icon('iaea.metadata', _('Metadata'), id=pkg.name, icon='fa fa-tag') }}
+  {% if h.check_access('package_update', {'id':pkg.id }) %}
+    {{ h.build_nav_icon('iaea.feature_view', _('View'), id=pkg.name, icon='check-square-o') }}
+  {% endif %}
+{% endblock %}
+
+{% block primary_content_inner %}
+    {% block package_revision_info %}
+      {% if c.revision_date %}
+        <div class="module info alert alert-info">
+          <p class="module-content">
+            {% set timestamp = h.render_datetime(c.revision_date, with_hours=True) %}
+            {% set url = h.url_for(controller='dataset', action='read', id=pkg.name) %}
+
+            {% trans timestamp=timestamp, url=url %}This is an old revision of this dataset, as edited at {{ timestamp }}. It may differ significantly from the <a href="{{ url }}">current revision</a>.{% endtrans %}
+          </p>
+        </div>
+      {% endif %}
+    {% endblock %}
+{% endblock %}
+{% block pre_primary %}
+<div class="dataset-description">
+  <div class="row">
+    <div class="col-xs-12 col-md-8 left-content">
+      {% if pkg.private %}
+      <span class="dataset-private label label-inverse pull-right">
+        <i class="fa fa-lock"></i>
+        {{ _('Private') }}
+      </span>
+      {% endif %}
+      <h1>
+        {% block page_heading %}
+        {{ h.dataset_display_name(pkg) }}
+        {% if pkg.state.startswith('draft') %}
+        [{{ _('Draft') }}]
+        {% endif %}
+        {% if pkg.state == 'deleted' %}
+        [{{ _('Deleted') }}]
+        {% endif %}
+        {% endblock %}
+      </h1>
+      {% block package_notes %}
+      {% if pkg.notes %}
+      <div class="notes embedded-content">
+        {{ h.render_markdown(h.get_translated(pkg, 'notes')) }}
+      </div>
+      {% endif %}
+      {% endblock %}
+    </div>
+    <div class="col-xs-4 right-content">
+      <div class="pull-right" style="margin-top: 20px;">
+        {% block title_and_actions_right_side %}
+        {% if pkg.organization %}
+        {% set org = h.get_organization(pkg.organization.name) %}
+        {% set url_org = h.url_for(pkg.organization.type + '_read', id=pkg.organization.name, ) %}
+        <div class="table-valign" style="width: 100%;">
+          <div class="table-valign-content">
+            <a href="{{url_org}}">
+              <img src="{{ org.image_display_url or h.url_for_static('/base/images/placeholder-organization.png') }}"
+                width="150" class="img-fluid" alt="{{ pkg.organization.name }}" />
+            </a>
+          </div>
+        </div>
+        {% endif %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-8 date-metadata">
+       Last Update: <span class="automatic-local-datetime" data-datetime="{{pkg.metadata_modified}}">
+        {{pkg.metadata_modified}}
+      </span>
+    </div>
+    <div class="col-xs-4 right-metadata"> 
+      {% if pkg.maintainer_email %}
+      <div class="btn contact-btn">
+        <a  href="mailto:{{pkg.maintainer_email}}">
+          <i class="fa fa-envelope"></i> 
+            Contact dataset maintainer
+        </a>
+      </div>
+      {% endif %}
+      <ul class="social-share">
+        <li><a href="https://www.facebook.com/sharer.php?u={{ current_url }} target="_blank""><i class="fa fa-facebook"></i></a></li>
+        <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ current_url }}" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a href="https://twitter.com/share?url={{current_url}}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+
+      </ul>
+    </div>
+  </div>
+</div>
+  {% if pkg.featured_view %}
+    <div class="dataset-view-container">
+      <h2>Featured Visualization</h2>
+      <div class="action">
+        <a class="btn btn-default" target="_blank" href="{{h.featured_view_url(pkg)}}">
+          <i class="fa fa-arrows-alt"></i>
+          Fullscreen
+        </a>
+      </div>
+    </div>
+    <iframe src="{{h.featured_view_url(pkg)}}" class="dataset-feature-view"></iframe>
+  {% endif %}
+{% endblock %}
+
+
+{% block secondary_content %}
+<div class="left-container">
+  {% block secondary_help_content %}
+    <div class="module context-info">
+      <div class="module-content">
+        <h1 class="heading">{{ _('Activity') }}</h1>
+        <div class="nums"></div>
+      </div>  
+    </div>
+  {#{ h.package_activity_html(pkg.id) | safe }#}
+  {% endblock %}
+  
+  {% block package_organization %}
+    {% if pkg.organization %}
+      {% set org = h.get_organization(pkg.organization.id) %}
+      {% snippet "snippets/organization.html", organization=org, has_context_title=true %}
+    {% endif %}
+  {% endblock %}
+
+
+  {% block package_info %}
+
+  {% endblock %}
+
+  {% block package_license %}
+  {% endblock %}
+  </div>
+{% endblock %}
+
 {% block main_content %} 
  {{ super() }}
  <div class="alert alert-info dataset-disclaimer">

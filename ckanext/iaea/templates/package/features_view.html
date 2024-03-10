@@ -1,0 +1,37 @@
+{% extends "package/read_base.html" %}
+
+{% block primary_content_inner %}
+{% if package_views %}
+
+<form action="#" method="post">
+    <fieldset class="fields-feature-view form-group">
+        <p>Select a view that should be featured on the dataset page.</p>
+        {% for resource in package_views %}
+        <h3> {{ resource.resource_name }}</h3>
+        {% for view in resource.views %}
+        <div class="radio-groups">
+            {% set view_url = h.url_for(qualified=True, controller='dataset_resource',
+            action='view', id=pkg['name'],
+            resource_id=view.resource_id,
+            view_id=view.id) %}
+            {% if pkg['featured_view'] == view.id %}
+            <input id="featured_view" name="featured_view" type="radio" class="radio" value="{{view.id}}" checked />
+            <span><a href="{{view_url}}" target="_blank">{{view.title}}</a></span>
+            {% else %}
+            <input id="featured_view" name="featured_view" type="radio" class="radio" value="{{view.id}}" /> 
+            <span><a href="{{view_url}}" target="_blank">{{view.title}}</a></span>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% endfor %}
+    </fieldset>
+
+    <div class="form-actions">
+        <input type="submit" class="btn btn-primary" name="submit" value="submit" />
+        <input type="submit" class="btn btn-danger" name="submit" value="clear" />
+    </div>
+</form>
+{% else %}
+<p>{{ _("There are no views created for this dataset yet.") }}</p>
+{% endif %}
+{% endblock %}
