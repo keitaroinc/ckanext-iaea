@@ -20,6 +20,8 @@
 {% block content_primary_nav %}
   {{ h.build_nav_icon('dataset_read', _('Dataset'), id=pkg.name) }}
   {{ h.build_nav_icon('iaea.metadata', _('Metadata'), id=pkg.name, icon='fa fa-tag') }}
+  {{ h.build_nav_icon(dataset_type ~ '.groups', _('Groups'), id=pkg.id if is_activity_archive else pkg.name, icon='users') }}
+  {{ h.build_nav_icon(dataset_type ~ '.activity', _('Activity Stream'), id=pkg.id if is_activity_archive else pkg.name, icon='clock-o') }}
   {% if h.check_access('package_update', {'id':pkg.id }) %}
     {{ h.build_nav_icon('iaea.feature_view', _('View'), id=pkg.name, icon='check-square-o') }}
   {% endif %}
