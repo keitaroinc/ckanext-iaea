@@ -1086,7 +1086,7 @@ body {
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
-  background-color: #fff;
+  background-color: #fff !important;
 }
 input,
 button,
@@ -1414,7 +1414,7 @@ a.bg-danger:focus {
 }
 ul,
 ol {
-  margin-top: 0px;
+  margin-top: 0px !important;
   margin-bottom: 10px;
 }
 ul ul,
@@ -7721,7 +7721,7 @@ a.tag:hover {
   top: 2px;
   width: 16px;
   height: 16px;
-  background-image: url("/base/images/sprite-ckan-icons.png");
+  background-image: url("../../../iaea/public/images/sprite-resource-icons.png");
   background-repeat: no-repeat;
   background-position: 16px 16px;
   content: "";
@@ -7792,7 +7792,7 @@ a.tag:hover {
   top: 2px;
   width: 16px;
   height: 16px;
-  background-image: url("/base/images/sprite-ckan-icons.png");
+  background-image: url("/images/sprite-resource-icons.png");
   background-repeat: no-repeat;
   background-position: 16px 16px;
   width: 17px;
@@ -9603,11 +9603,11 @@ h4 small {
   top: 2px;
   width: 16px;
   height: 16px;
-  background-image: url("/base/images/sprite-ckan-icons.png");
+  background-image: url("/images/sprite-resource-icons.png");
   background-repeat: no-repeat;
   background-position: 16px 16px;
   text-indent: -900em;
-  background: url("/base/images/sprite-resource-icons.png") no-repeat 0 0;
+  background: url("/images/sprite-resource-icons.png") no-repeat 0 0;
 }
 .format-label {
   width: 32px;
@@ -9782,6 +9782,7 @@ body {
   /* min-height: 350px;
   border: 2px solid red; */
   min-height: 0px;
+  background-color: #fff;
 }
 .main:after,
 [role="main"]:after {
@@ -9928,7 +9929,7 @@ body {
   overflow: auto;
 }
 .context-info h1.heading {
-  margin: 0 0 5px 0;
+  margin: 15px 0 5px 0 !important;
   font-size: 18px;
   line-height: 1.3;
   -ms-word-break: break-all;
