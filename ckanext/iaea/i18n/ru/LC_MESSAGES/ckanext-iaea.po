@@ -1,4 +1,4 @@
-# Spanish translations for ckanext-iaea.
+# Russian translations for ckanext-iaea.
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the ckanext-iaea
 # project.
@@ -9,11 +9,12 @@ msgstr ""
 "Project-Id-Version: ckanext-iaea 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-03-12 11:22+0100\n"
-"PO-Revision-Date: 2024-03-12 11:25+0100\n"
+"PO-Revision-Date: 2024-03-12 11:24+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: es\n"
-"Language-Team: es <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language: ru\n"
+"Language-Team: ru <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -85,6 +86,7 @@ msgid ""
 msgid_plural "Dashboard (%(num)d new items)"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: ckanext/iaea/templates/header.html:61
 msgid "Dashboard"
@@ -126,7 +128,7 @@ msgstr ""
 #: ckanext/iaea/templates/header.html:157
 #: ckanext/iaea/templates/home/layout1.html:54
 msgid "Topics"
-msgstr "Les sujets"
+msgstr "Темы"
 
 #: ckanext/iaea/templates/header.html:157
 #: ckanext/iaea/templates/package/base.html:8
@@ -137,7 +139,7 @@ msgstr ""
 
 #: ckanext/iaea/templates/group/snippets/helper.html:4
 msgid "What are Topics?"
-msgstr "Que sont les sujets ?"
+msgstr "Что такое темы?"
 
 #: ckanext/iaea/templates/group/snippets/helper.html:8
 msgid ""
@@ -146,10 +148,10 @@ msgid ""
 "on a particular theme, or as a very simple way to help people find and "
 "search your own published datasets."
 msgstr ""
-"Vous pouvez utiliser CKAN Topics pour créer et gérer des collections d'ensembles de données. "
-"Cela pourrait être de cataloguer des ensembles de données pour un projet ou une équipe particulière, ou"
-"sur un thème particulier, ou comme moyen très simple d'aider les gens à trouver et"
-"recherchez vos propres ensembles de données publiés."
+"Вы можете использовать CKAN Topics для создания коллекций наборов данных и управления ими."
+"Это может быть каталогизация наборов данных для конкретного проекта или команды, или"
+"по определенной теме или как очень простой способ помочь людям найти и"
+"ищите свои собственные опубликованные наборы данных"
 
 #: ckanext/iaea/templates/home/layout1.html:14
 #: ckanext/iaea/templates/home/snippets/promoted.html:5
@@ -191,11 +193,11 @@ msgstr ""
 
 #: ckanext/iaea/templates/home/snippets/stats.html:17
 msgid "group"
-msgstr "le sujet"
+msgstr "группа"
 
 #: ckanext/iaea/templates/home/snippets/stats.html:17
 msgid "groups"
-msgstr "le sujet"
+msgstr "группы"
 
 #: ckanext/iaea/templates/package/base.html:16
 msgid "Organizations"
@@ -223,7 +225,7 @@ msgstr ""
 
 #: ckanext/iaea/templates/package/read_base.html:23
 msgid "Groups"
-msgstr "le sujets"
+msgstr "Группы"
 
 #: ckanext/iaea/templates/package/read_base.html:24
 msgid "Activity Stream"

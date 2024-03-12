@@ -1,4 +1,4 @@
-# Spanish translations for ckanext-iaea.
+# Chinese (Simplified, China) translations for ckanext-iaea.
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the ckanext-iaea
 # project.
@@ -9,11 +9,11 @@ msgstr ""
 "Project-Id-Version: ckanext-iaea 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-03-12 11:22+0100\n"
-"PO-Revision-Date: 2024-03-12 11:25+0100\n"
+"PO-Revision-Date: 2024-03-12 11:26+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: es\n"
-"Language-Team: es <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language: zh_Hans_CN\n"
+"Language-Team: zh_Hans_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -84,7 +84,6 @@ msgid ""
 "          item)"
 msgid_plural "Dashboard (%(num)d new items)"
 msgstr[0] ""
-msgstr[1] ""
 
 #: ckanext/iaea/templates/header.html:61
 msgid "Dashboard"
@@ -126,7 +125,7 @@ msgstr ""
 #: ckanext/iaea/templates/header.html:157
 #: ckanext/iaea/templates/home/layout1.html:54
 msgid "Topics"
-msgstr "Les sujets"
+msgstr "主题"
 
 #: ckanext/iaea/templates/header.html:157
 #: ckanext/iaea/templates/package/base.html:8
@@ -137,7 +136,7 @@ msgstr ""
 
 #: ckanext/iaea/templates/group/snippets/helper.html:4
 msgid "What are Topics?"
-msgstr "Que sont les sujets ?"
+msgstr "什么是主题"
 
 #: ckanext/iaea/templates/group/snippets/helper.html:8
 msgid ""
@@ -146,10 +145,10 @@ msgid ""
 "on a particular theme, or as a very simple way to help people find and "
 "search your own published datasets."
 msgstr ""
-"Vous pouvez utiliser CKAN Topics pour créer et gérer des collections d'ensembles de données. "
-"Cela pourrait être de cataloguer des ensembles de données pour un projet ou une équipe particulière, ou"
-"sur un thème particulier, ou comme moyen très simple d'aider les gens à trouver et"
-"recherchez vos propres ensembles de données publiés."
+"您可以使用主题来创建和管理数据集集合。"
+"这可能是为特定项目或团队编目数据集，或者"
+"针对特定主题，或者作为一种非常简单的方式来帮助人们找到并"
+"搜索您自己发布的数据集。"
 
 #: ckanext/iaea/templates/home/layout1.html:14
 #: ckanext/iaea/templates/home/snippets/promoted.html:5
@@ -191,11 +190,11 @@ msgstr ""
 
 #: ckanext/iaea/templates/home/snippets/stats.html:17
 msgid "group"
-msgstr "le sujet"
+msgstr ""
 
 #: ckanext/iaea/templates/home/snippets/stats.html:17
 msgid "groups"
-msgstr "le sujet"
+msgstr ""
 
 #: ckanext/iaea/templates/package/base.html:16
 msgid "Organizations"
@@ -223,7 +222,7 @@ msgstr ""
 
 #: ckanext/iaea/templates/package/read_base.html:23
 msgid "Groups"
-msgstr "le sujets"
+msgstr ""
 
 #: ckanext/iaea/templates/package/read_base.html:24
 msgid "Activity Stream"
