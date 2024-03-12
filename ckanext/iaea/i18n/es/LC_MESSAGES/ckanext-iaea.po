@@ -126,7 +126,7 @@ msgstr ""
 #: ckanext/iaea/templates/header.html:157
 #: ckanext/iaea/templates/home/layout1.html:54
 msgid "Topics"
-msgstr "Les sujets"
+msgstr "Temas"
 
 #: ckanext/iaea/templates/header.html:157
 #: ckanext/iaea/templates/package/base.html:8
@@ -137,7 +137,7 @@ msgstr ""
 
 #: ckanext/iaea/templates/group/snippets/helper.html:4
 msgid "What are Topics?"
-msgstr "Que sont les sujets ?"
+msgstr "Qué son los temas?"
 
 #: ckanext/iaea/templates/group/snippets/helper.html:8
 msgid ""
@@ -146,8 +146,8 @@ msgid ""
 "on a particular theme, or as a very simple way to help people find and "
 "search your own published datasets."
 msgstr ""
-"Vous pouvez utiliser CKAN Topics pour créer et gérer des collections d'ensembles de données. "
-"Cela pourrait être de cataloguer des ensembles de données pour un projet ou une équipe particulière, ou"
+"Puede utilizar CKAN Topics para crear y generar colecciones de conjuntos de données."
+"Esto podría ser catalogado por conjuntos de données para un proyecto o un equipo particular, o"
 "sur un thème particulier, ou comme moyen très simple d'aider les gens à trouver et"
 "recherchez vos propres ensembles de données publiés."
 
@@ -191,11 +191,11 @@ msgstr ""
 
 #: ckanext/iaea/templates/home/snippets/stats.html:17
 msgid "group"
-msgstr "le sujet"
+msgstr "tema"
 
 #: ckanext/iaea/templates/home/snippets/stats.html:17
 msgid "groups"
-msgstr "le sujet"
+msgstr "temas"
 
 #: ckanext/iaea/templates/package/base.html:16
 msgid "Organizations"
@@ -223,7 +223,7 @@ msgstr ""
 
 #: ckanext/iaea/templates/package/read_base.html:23
 msgid "Groups"
-msgstr "le sujets"
+msgstr "Temas"
 
 #: ckanext/iaea/templates/package/read_base.html:24
 msgid "Activity Stream"
