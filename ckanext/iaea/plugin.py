@@ -71,11 +71,15 @@ def suggested_filter_fields_serializer(datapackage, view_dict):
 
 
 def featured_view_url(pkg):
+
     featured_view = model.ResourceView.get(pkg['featured_view'])
-    return toolkit.h.url_for(qualified=True, controller='dataset_resource',
-                               action='view', id=pkg['name'],
-                               resource_id=featured_view.resource_id,
-                               view_id=featured_view.id)
+    if featured_view:      
+        return toolkit.h.url_for(qualified=True, controller='dataset_resource',
+                                action='view', id=pkg['name'],
+                                resource_id=featured_view.resource_id,
+                                view_id=featured_view.id)
+    else:
+        return None
 
 
 class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
