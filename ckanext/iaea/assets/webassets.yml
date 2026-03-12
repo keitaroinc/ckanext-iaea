@@ -12,6 +12,7 @@ iaea-css:
   output: ckanext-iaea/%(version)s-iaea.css
   contents:
     - css/iaea.css
+    - css/custom.css
 
 rtl-css:
   filter: cssrewrite
