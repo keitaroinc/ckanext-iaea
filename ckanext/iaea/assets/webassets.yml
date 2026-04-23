@@ -13,6 +13,7 @@ iaea-css:
   contents:
     - css/iaea.css
     - css/custom.css
+    - css/map-popups.css
 
 rtl-css:
   filter: cssrewrite
