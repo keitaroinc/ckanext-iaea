@@ -123,6 +123,15 @@ class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
         toolkit.add_public_directory(config_, "public")
         toolkit.add_resource("assets", "iaea")
 
+        # Move iaea's template directory to the front so it takes precedence
+        # over plugins registered earlier (e.g. reclineview). CKAN appends
+        # paths to extra_template_paths in plugin load order, so the last
+        # entry (ours) would otherwise lose to earlier plugins.
+        paths = config_.get('extra_template_paths', '').split(',')
+        paths = [p for p in paths if p]
+        if paths:
+            config_['extra_template_paths'] = paths[-1] + ',' + ','.join(paths[:-1])
+
     # ITemplateHelpers
         
     def get_helpers(self):

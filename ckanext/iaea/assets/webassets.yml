@@ -3,6 +3,7 @@ iaea-js:
   output: ckanext-iaea/%(version)s-iaea.js
   contents:
     - js/iaea.js
+    - js/recline-map-popup.js
   extra:
     preload:
       - base/main
@@ -14,6 +15,15 @@ iaea-css:
     - css/iaea.css
     - css/custom.css
     - css/map-popups.css
+
+recline-map-popup-js:
+  filter: rjsmin
+  output: ckanext-iaea/%(version)s-recline-map-popup.js
+  contents:
+    - js/recline-map-popup.js
+  extra:
+    preload:
+      - ckanext-reclineview/main
 
 rtl-css:
   filter: cssrewrite
