@@ -15,6 +15,7 @@ iaea-css:
     - css/iaea.css
     - css/custom.css
     - css/map-popups.css
+    - css/visualize_main.css
 
 recline-map-popup-js:
   filter: rjsmin
