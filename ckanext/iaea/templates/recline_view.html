@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block page %}
+<style>
+  .leaflet-popup-content-wrapper {
+    max-width: 340px;
+    min-width: 200px;
+  }
+  .leaflet-popup-content {
+    max-height: 200px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+  .leaflet-popup-content div {
+    padding: 3px 0;
+    border-bottom: 1px solid #f0f0f0;
+    line-height: 1.5;
+    font-size: 13px;
+  }
+  .leaflet-popup-content div:last-child {
+    border-bottom: none;
+  }
+  .leaflet-popup-content strong {
+    color: #333;
+    margin-right: 4px;
+  }
+</style>
+
+<script>
+/* Patch bindPopup on every marker/layer to add maxHeight: 200.
+   Polls until Leaflet is available, then wraps L.Layer.prototype.bindPopup. */
+(function () {
+  'use strict';
+  function patch() {
+    if (typeof L === 'undefined' || !L.Layer || !L.Layer.prototype.bindPopup) {
+      setTimeout(patch, 50);
+      return;
+    }
+    var _orig = L.Layer.prototype.bindPopup;
+    L.Layer.prototype.bindPopup = function (content, options) {
+      if (!options) {
+        options = { maxHeight: 200 };
+      } else if (!options.maxHeight) {
+        options.maxHeight = 200;
+      }
+      return _orig.call(this, content, options);
+    };
+  }
+  patch();
+}());
+</script>
+
+  {% set map_config = h.get_map_config() %}
+  <div data-module="recline_view"
+       data-module-site_url="{{ h.dump_json(h.url('/', locale='default', qualified=true)) }}"
+       data-module-resource = "{{ h.dump_json(resource_json) }}";
+       data-module-resource-view = "{{ h.dump_json(resource_view_json) }}";
+       data-module-map_config= "{{ h.dump_json(map_config) }}";
+       data-module-dataproxy-url= "{{ h.get_dataproxy_url() }}"
+       >
+    <h4 class="loading-dialog">
+      <div class="loading-spinner"></div>
+      <div class="left">{{ _('Loading...') }}</div>
+    </h4>
+  </div>
+
+  {% asset 'base/view-filters' %}
+  {% asset 'ckanext-reclineview/main' %}
+  {% asset 'iaea/recline-map-popup-js' %}
+{% endblock %}
+
+{% block styles %}{% endblock %}
+{% block custom_styles %}{% endblock %}
