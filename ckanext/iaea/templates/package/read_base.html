@@ -18,10 +18,13 @@
 {% endblock %}
 
 {% block content_primary_nav %}
-  {{ h.build_nav_icon('dataset_read', _('Dataset'), id=pkg.name) }}
+  {{ h.build_nav_icon('dataset.read', _('Dataset'), id=pkg.name) }}
   {{ h.build_nav_icon('iaea.metadata', _('Metadata'), id=pkg.name, icon='fa fa-tag') }}
   {{ h.build_nav_icon(dataset_type ~ '.groups', _('Groups'), id=pkg.id if is_activity_archive else pkg.name, icon='users') }}
-  {{ h.build_nav_icon(dataset_type ~ '.activity', _('Activity Stream'), id=pkg.id if is_activity_archive else pkg.name, icon='clock-o') }}
+  {# Activity Stream tab intentionally omitted here: CKAN 2.11's activity extension
+     adds it via super() in content_primary_nav using the current
+     'activity.package_activity' endpoint. Hardcoding 'dataset.activity' here both
+     crashed (dead endpoint) and duplicated the tab. #}
   {% if h.check_access('package_update', {'id':pkg.id }) %}
     {{ h.build_nav_icon('iaea.feature_view', _('View'), id=pkg.name, icon='check-square-o') }}
   {% endif %}
@@ -147,12 +150,10 @@
   {% snippet "snippets/license.html", pkg_dict=pkg %}
 {% endblock %}
   
-  {% block package_organization %}
-    {% if pkg.organization %}
-      {% set org = h.get_organization(pkg.organization.id) %}
-      {% snippet "snippets/organization.html", organization=org, has_context_title=true %}
-    {% endif %}
-  {% endblock %}
+  {# Organization info box intentionally hidden on dataset pages.
+     (Previously done via a snippets/organization.html override that blanked the
+     info block; CKAN 2.11 removed that core template — see organization/snippets/info.html.) #}
+  {% block package_organization %}{% endblock %}
 
   </div>
 {% endblock %}
