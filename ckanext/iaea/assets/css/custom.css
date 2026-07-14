@@ -4,3 +4,23 @@
     margin-bottom: 15px;
     }
 }
+
+/* Search form: core ships Bootstrap 5 input-group markup (bare button, no
+   .input-group-btn wrapper). The theme's Bootstrap 3 CSS lays .input-group out
+   as a table, so the bare button wraps to a second row. Force flex so the input
+   and button stay on one row, with the input filling to the end of the layout. */
+.search-input-group {
+    display: flex;
+    width: 100%;
+}
+.search-input-group .form-control {
+    flex: 1 1 auto;
+    width: 1%;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.search-input-group .btn {
+    flex: 0 0 auto;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
