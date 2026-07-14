@@ -214,3 +214,35 @@
 .module-content:has(> .accordion) {
     display: none;
 }
+
+/* ckanext-charts renders its chart-config form with Bootstrap 5 tab markup:
+   the active pane is <div class="tab-pane fade show active">. This theme ships
+   Bootstrap 3 CSS, which reveals faded elements with .in (not .show) and treats
+   .show as a plain display utility. So on the charts form .fade pins the active
+   pane to opacity:0 while .active still displays it (via ".tab-content > .active"),
+   leaving the whole form invisible — the fields occupy layout space but are fully
+   transparent, and the chart preview below them ends up dangling at the bottom of
+   the page. Bootstrap 5 JS (loaded by CKAN core) toggles .show/.active correctly
+   on tab switch, so restoring opacity on the shown pane is all that's needed. */
+.charts-view--form .tab-pane.active,
+.charts-view--form .tab-pane.show {
+    opacity: 1;
+}
+
+/* ckanext-charts Plotly/Observable charts collapse to a thin strip (only the
+   axis renders). ckanext-charts names its graph div ".chart-container" and gives
+   it only "max-height: 600px" (no height), relying on Plotly's autosize: an empty
+   div reports getComputedStyle().height == "0px", so Plotly falls back to the
+   max-height (600px). But this theme bundles ckanext-visualize's visualize_main.css,
+   whose GLOBAL ".chart-container { padding: 1rem }" gives the empty div a nonzero
+   computed height (~32px). Plotly's autosize reads that height first
+   (getComputedSize(height) || getComputedSize(maxHeight) || layout.height), so the
+   whole chart is drawn 32px tall. ECharts is immune (inline height:600px, no
+   .chart-container class); chartjs uses a <canvas>. Pin the div-based engines
+   (Plotly, Observable) to an explicit height so autosize gets a real value
+   regardless of the inherited padding (box-sizing:border-box makes padding harmless). */
+.resource-view-charts_view div.chart-container,
+.resource-view-charts_builder_view div.chart-container,
+#content div.charts-view div.chart-container {
+    height: 600px;
+}
