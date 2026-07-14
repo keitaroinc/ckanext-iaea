@@ -11,7 +11,7 @@
     }, {
         "preset_name": "iaea_dataset_organization",
         "values": {
-            "validators": "owner_org_validator unicode iaea_owner_org_validator",
+            "validators": "owner_org_validator unicode_safe iaea_owner_org_validator",
             "form_snippet": "snippets/form/organization.html"
         }
     }]
