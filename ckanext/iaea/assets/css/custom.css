@@ -111,3 +111,106 @@
 .resource-upload-field input#field-clear-upload:checked ~ .upload-type {
     display: block;
 }
+
+/* Data Dictionary (resource page): CKAN 2.11 renders the field list as a
+   Bootstrap 5 accordion (.accordion / .accordion-item / .accordion-button, with
+   .col-1/.col-7/.col-4 grid columns inside each header) built by
+   datastore/snippets/dictionary_view.html. Bootstrap 5 JS is loaded, so the
+   expand/collapse toggle works, but the theme's Bootstrap 3 CSS defines none of
+   the .accordion-* classes (BS3 used .panel) nor the .col-1/.col-7/.col-4 grid
+   (BS3 grid is .col-xs-*), so every field collapses into a bare stacked box.
+   Provide minimal Bootstrap-5-equivalent accordion styling, scoped to
+   .accordion (only used by the data dictionary and the admin data-type page). */
+.accordion {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    max-width: 700px;
+}
+.accordion-item {
+    border-bottom: 1px solid #dee2e6;
+    background-color: #fff;
+}
+.accordion-item:last-child {
+    border-bottom: 0;
+}
+.accordion-header {
+    margin: 0;
+    font-size: inherit;
+}
+.accordion-button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 15px;
+    border: 0;
+    background-color: #fff;
+    color: #333333;
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: left;
+    cursor: pointer;
+}
+.accordion-button:hover:not([disabled]) {
+    background-color: #f5f5f5;
+}
+.accordion-button[disabled] {
+    cursor: default;
+}
+/* the three header columns: index | field name | type */
+.accordion-button .col-1 {
+    flex: 0 0 auto;
+    width: 2em;
+    font-weight: bold;
+}
+.accordion-button .col-7 {
+    flex: 1 1 auto;
+    font-weight: bold;
+}
+.accordion-button .col-4 {
+    flex: 0 0 auto;
+    color: #777777;
+    font-family: monospace;
+    text-align: right;
+}
+/* caret shown only on expandable rows (disabled ones carry .no-after) */
+.accordion-button:not(.no-after)::after {
+    content: "\25be";
+    margin-left: 10px;
+    color: #777777;
+    transition: transform 0.2s ease;
+}
+.accordion-button.collapsed:not(.no-after)::after {
+    transform: rotate(-90deg);
+}
+/* collapse behaviour: BS5 JS toggles .show, which BS3 CSS doesn't know about */
+.accordion-collapse.collapse {
+    display: none;
+}
+.accordion-collapse.collapse.show,
+.accordion-collapse.collapsing {
+    display: block;
+}
+.accordion-body {
+    margin: 0;
+    padding: 10px 15px;
+    background-color: #fafafa;
+    border-top: 1px solid #dee2e6;
+}
+.accordion-body dt {
+    font-weight: bold;
+}
+
+/* Hide the Data Dictionary section on the resource view page. The datastore
+   plugin outranks this theme in CKAN's template search path, so it cannot be
+   removed via a template override from here; hide it with CSS instead. The
+   dictionary renders as a .module-content whose direct children include the
+   per-field .accordion elements (built by datastore/snippets/dictionary_view.html);
+   the only other .accordion in the app (the admin data-type page) is not wrapped
+   in a .module-content, so the "> .accordion" child combinator targets the data
+   dictionary alone. The dictionary remains editable on the dedicated /dictionary
+   page. */
+.module-content:has(> .accordion) {
+    display: none;
+}
