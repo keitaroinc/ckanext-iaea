@@ -35,3 +35,79 @@
     max-width: 100%;
     height: auto;
 }
+
+/* Resource "Add data" form: CKAN 2.11 rebuilt the resource upload widget
+   (package/snippets/resource_upload_field.html) into a radio-driven show/hide
+   component: hidden <input type=radio> buttons toggle .select-type / .upload-type
+   sections via CSS sibling selectors. The theme's Bootstrap 3 CSS still carries
+   the old CKAN 2.8/2.9 .resource-upload-field styles (an invisible-file-input
+   overlay that forces every descendant input to opacity:0/absolute with a huge
+   border, and the container to inline-block/overflow:hidden). Core main.css is
+   not loaded, so none of the 2.11 rules reach the browser: all sections render
+   at once and the url/file inputs are hidden. Reset the legacy overlay rules and
+   port CKAN 2.11's core _forms.scss (.resource-upload-field). */
+
+/* 1. Undo the legacy inline-block/overlay container + input rules. */
+.resource-upload-field {
+    display: block;
+    overflow: visible;
+    vertical-align: baseline;
+}
+.resource-upload-field input {
+    filter: none;
+    opacity: 1;
+    position: static;
+    z-index: auto;
+    margin: 0;
+    border: 0;
+    cursor: auto;
+    -moz-transform: none;
+    transform: none;
+}
+/* restore the normal input border stripped by the reset above (matches the
+   theme's .form-control); higher specificity than the reset so it wins. */
+.resource-upload-field input.form-control {
+    border: 1px solid #ced4da;
+}
+
+/* 2. Port of CKAN 2.11 core _forms.scss: hidden radios toggle the sections. */
+.resource-upload-field > input[type="radio"] {
+    display: none;
+}
+.resource-upload-field > div.select-type {
+    position: relative;
+    display: none;
+}
+.resource-upload-field > input[type="radio"]:checked + div.select-type {
+    display: block;
+}
+.resource-upload-field label.btn::after {
+    content: "";
+}
+.resource-upload-field .btn-remove-url {
+    position: absolute;
+    margin-right: 0;
+    margin-top: 11px;
+    top: 30px;
+    right: 5px;
+    padding: 0 12px;
+    border-radius: 100px;
+}
+.resource-upload-field .btn-remove-url .icon-remove {
+    margin-right: 0;
+}
+.resource-upload-field input#field-clear-upload {
+    display: none;
+}
+.resource-upload-field input#field-clear-upload + div.upload-type {
+    display: block;
+}
+.resource-upload-field input#field-clear-upload ~ .upload-type {
+    display: none;
+}
+.resource-upload-field input#field-clear-upload:checked + div.upload-type {
+    display: none;
+}
+.resource-upload-field input#field-clear-upload:checked ~ .upload-type {
+    display: block;
+}
