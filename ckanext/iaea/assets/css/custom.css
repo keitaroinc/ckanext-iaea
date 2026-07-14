@@ -24,3 +24,14 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
+
+/* Responsive images: core ships Bootstrap 5 markup that constrains images with
+   the .img-fluid utility (e.g. organization/group logos in the media grid,
+   rendered as <img class="img-fluid media-image">). The theme's Bootstrap 3 CSS
+   only defines the old .img-responsive utility, so .img-fluid images render at
+   their natural pixel size and overflow their containers (e.g. org/group cards).
+   Define .img-fluid with its standard Bootstrap definition. */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
