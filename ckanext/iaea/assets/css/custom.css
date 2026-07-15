@@ -246,3 +246,18 @@
 #content div.charts-view div.chart-container {
     height: 600px;
 }
+
+/* Flash messages: CKAN 2.11 core renders every flash alert with Bootstrap 5
+   markup — <div class="alert alert-dismissible fade show {{ category }}"> (see
+   core page.html). This theme ships Bootstrap 3 CSS, which pins .fade to
+   opacity:0 and only restores it via .fade.in; the BS5 .show class is treated
+   as a plain "display:block" utility and never restores opacity. So every flash
+   message renders fully transparent: it occupies layout space (the blank white
+   gap at the top of the page) but is invisible. This bites hardest on the
+   one-time "API Token created: <code>…</code>" notice — the new token is there
+   and its copy button still works (opacity:0 elements stay clickable), but the
+   value can't be read. Same .fade/.show mismatch as the charts-form fix above;
+   restore opacity on any shown fade alert. */
+.alert.fade.show {
+    opacity: 1;
+}
