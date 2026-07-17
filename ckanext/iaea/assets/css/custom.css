@@ -261,3 +261,24 @@
 .alert.fade.show {
     opacity: 1;
 }
+
+/* Confirm dialogs (e.g. the ✕ "Revoke API token" button): CKAN 2.11 core's
+   confirm-action.js opens a Bootstrap 5 modal — it reveals the dialog by adding
+   the .show class (via BS5's jQuery bridge). This theme's Bootstrap 3 CSS only
+   makes a .fade element visible through .fade.in, so the BS5 .show class never
+   restores opacity: the modal and its backdrop open in the DOM (display:block)
+   but render fully transparent. The click IS handled (the module calls
+   preventDefault, so the surrounding form never submits), which is why the ✕
+   appears to "do nothing" and the token is never revoked — the invisible
+   Confirm button can't be reached. Same .fade/.show mismatch as the flash-alert
+   fix above; restore modal + backdrop visibility and center the shown dialog. */
+.modal.fade.show {
+    opacity: 1;
+}
+.modal-backdrop.fade.show {
+    opacity: 0.5;
+}
+.modal.fade.show .modal-dialog {
+    -webkit-transform: none;
+    transform: none;
+}
