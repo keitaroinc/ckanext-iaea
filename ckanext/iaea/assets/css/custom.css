@@ -328,3 +328,18 @@
     top: 12px;
     right: 15px;
 }
+/* CKAN 2.11 ships Bootstrap 5 JS, which builds the "Markdown formatting"
+   popover with BS5 markup and reveals it by adding a `.show` class. This theme's
+   Bootstrap 3 CSS hides popovers two ways and only un-hides via `.in` (which BS5
+   never applies): `.popover { display: none }` AND `.fade { opacity: 0 }` with a
+   `.fade.in { opacity: 1 }` reveal rule. So a BS5 popover (classes
+   `popover fade show`) stayed both display:none and opacity:0. Restore both, and
+   pad the BS5 body (BS3 styles .popover-content, BS5 emits .popover-body). */
+.popover.show {
+    display: block;
+    opacity: 1;
+}
+.popover .popover-body {
+    padding: 9px 14px;
+    color: #42526e;
+}
