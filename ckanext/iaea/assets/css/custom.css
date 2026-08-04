@@ -282,3 +282,49 @@
     -webkit-transform: none;
     transform: none;
 }
+
+/* Modal close (✕) button, e.g. the "CKAN Data API" popup: CKAN 2.11 core's
+   datastore api-info.js injects a Bootstrap 5 close button
+   <button class="btn-close"></button> that carries no text — BS5 renders its ✕
+   as a background SVG on .btn-close. This theme's Bootstrap 3 CSS has no
+   .btn-close rule, so the button renders as an empty, unstyled box (the blank
+   button under the "CKAN Data API" heading) and drops below the title. Restyle
+   .btn-close to behave like BS3's .close and supply the ✕ via a pseudo-element.
+   Same BS3/BS5 mismatch family as the .fade.show modal fix above. */
+.btn-close {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 24px;
+    text-align: center;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: 0.6;
+    cursor: pointer;
+}
+.btn-close::before {
+    content: "\00d7";
+}
+.btn-close:hover,
+.btn-close:focus {
+    color: #000;
+    text-decoration: none;
+    opacity: 1;
+}
+/* api-info.js appends the button after the <h3>, so a plain float would drop it
+   below the heading — pin it to the header's top-right corner instead. */
+.modal-header {
+    position: relative;
+}
+.modal-header .btn-close {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+}
