@@ -478,3 +478,23 @@ body.dt-view div.dt-button-collection.fixed > :last-child {
 div.dtr-bs-modal .modal-header .modal-title {
     padding-right: 36px;
 }
+/* Resource "Additional Information" table: remove the "Show more" / "Hide"
+   toggle so it renders as a plain static table and the collapsible rows (the
+   raw resource-dict fields: Ckan url, Datastore active, Has views, Hash,
+   Ignore hash, Mimetype, etc.) never become reachable in the UI.
+   table-toggle-more.js injects a <tr class="toggle-show toggle-show-more">
+   holding the show-more/show-less links plus a <tr class="toggle-seperator">;
+   the .toggle-more data rows are hidden by core CSS in the collapsed
+   (.table-toggle-more) state. We hide the toggle row + separator in BOTH
+   states and force the collapsible rows to stay hidden even if the state flips.
+   Global is safe here: the only other user of .table-toggle-more is the
+   tabledesigner choice snippet, and the tabledesigner plugin is not enabled. */
+.table-toggle-more .toggle-show,
+.table-toggle-less .toggle-show,
+.table-toggle-more .toggle-seperator,
+.table-toggle-less .toggle-seperator {
+    display: none !important;
+}
+.table-toggle-less .toggle-more {
+    display: none !important;
+}
