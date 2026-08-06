@@ -240,6 +240,23 @@
 .resource-view-charts_builder_view div.chart-container,
 #content div.charts-view div.chart-container {
     height: 600px;
+    /* Also drop the inherited visualize_main.css padding here: with
+       box-sizing:border-box it shrinks the content box to 568px while the box
+       still occupies 600px, so the drawn chart (x tick labels + axis title,
+       which Plotly pushes to the very bottom edge) ends up flush against the
+       .chart-control row below and the snapshot button reads as overlapping
+       the chart. padding:0 makes the pinned height the drawn height. */
+    padding: 0;
+}
+
+/* ckanext-charts puts the snapshot button in ".chart-control mt-2" directly
+   after the chart div — 8px, which is not enough separation from a Plotly plot
+   that draws its axis title on its bottom edge. Give the control row real
+   clearance so the button sits clearly below the chart. */
+.resource-view-charts_view .chart-control,
+.resource-view-charts_builder_view .chart-control,
+#content div.charts-view .chart-control {
+    margin-top: 1.5rem;
 }
 
 /* Flash messages: CKAN 2.11 core renders every flash alert with Bootstrap 5
