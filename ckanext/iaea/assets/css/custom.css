@@ -338,3 +338,96 @@
     padding: 9px 14px;
     color: #42526e;
 }
+
+/* DataTables collection popups on the Table view — the "Toggle column
+   visibility" (eye) menu and the "Filtered download" (CSV/TSV/JSON/XML) menu.
+   The vendored bundle in ckanext/datatablesview/assets/vendor/DataTables is the
+   Bootstrap 5 build (its banner reads
+   datatables.net/download/#bs5/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/...), so
+   Buttons emits BS5 dropdown markup:
+       <div class="dt-button-collection fixed">
+         <div class="dropdown-menu" role="menu">
+           <a class="dt-button buttons-columnVisibility dropdown-item active">…
+   and hands the entries to Bootstrap: datatables.css styles only the outer
+   white box (and deliberately blanks the inner .dropdown-menu), while each
+   entry's block layout, padding, hover and "currently shown" state come from
+   BS5's .dropdown-item. This theme ships Bootstrap 3 — whose menus are
+   <li><a> and which defines no .dropdown-item at all — and core main.css is not
+   loaded, so every entry renders as a bare inline link: no padding, no hover,
+   no indication of which columns are visible, reflowing into ragged columns
+   inside the popup. Port the missing item rules using BS3's dropdown values.
+   These rules must out-specify datatables.css, which is registered after
+   iaea-css on this page — hence the body.dt-view prefix (the view template sets
+   that class on <body>). */
+
+/* BS3's .dropdown-menu leaks float/offsets into the inner menu, which
+   datatables.css re-purposes as a plain block wrapper. */
+body.dt-view div.dt-button-collection div.dropdown-menu {
+    float: none;
+    top: auto;
+    left: auto;
+    margin: 0;
+}
+
+body.dt-view div.dt-button-collection .dt-button.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 5px 12px 5px 28px;
+    clear: both;
+    border: 0;
+    background: none;
+    color: #333333;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: left;
+    text-decoration: none;
+    white-space: normal;
+    cursor: pointer;
+}
+body.dt-view div.dt-button-collection .dt-button.dropdown-item:hover,
+body.dt-view div.dt-button-collection .dt-button.dropdown-item:focus {
+    background-color: #f5f5f5;
+    color: #262626;
+    text-decoration: none;
+    outline: none;
+}
+
+/* colvis flags the currently shown columns with .active. Bootstrap 5 fills
+   those solid blue, which on a resource with 30+ mostly-visible columns is a
+   wall of blue, so tick + tint them instead. The hidden tick placeholder on
+   inactive entries keeps every label on the same left edge. */
+body.dt-view div.dt-button-collection .dt-button.dropdown-item::before {
+    content: "\2713";
+    display: inline-block;
+    width: 12px;
+    margin-left: -16px;
+    margin-right: 4px;
+    visibility: hidden;
+}
+body.dt-view div.dt-button-collection .dt-button.dropdown-item.active::before {
+    visibility: visible;
+}
+body.dt-view div.dt-button-collection .dt-button.dropdown-item.active {
+    background-color: #eaf3fa;
+    color: #23527c;
+}
+
+/* Separate the trailing actions (Restore visibility / Show all / Show none /
+   Filtered) from the column entries above them. */
+body.dt-view div.dt-button-collection .dt-button.buttons-colvisRestore {
+    margin-top: 5px;
+    padding-top: 8px;
+    border-top: 1px solid #e5e5e5;
+}
+
+/* Block-level entries make the list far taller than the inline links they
+   replace, so bound it. datatables_view.css pins the popup with
+   "top: 50%; transform: translate(-65%, -20%)" and Buttons adds an inline
+   margin-top of -height/2, which puts the top edge at 0.5H - 0.7h: once the
+   popup is taller than ~70vh its top sits above the top of the (iframe)
+   viewport, out of reach — a transform offset can't be scrolled back. Cap it
+   just under that and let the inner menu scroll; datatables.css already sets
+   overflow: auto on this element. */
+body.dt-view div.dt-button-collection.fixed > :last-child {
+    max-height: calc(70vh - 1rem);
+}
