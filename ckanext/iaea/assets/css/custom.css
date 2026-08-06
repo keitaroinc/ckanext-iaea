@@ -448,3 +448,33 @@ body.dt-view div.dt-button-collection .dt-button.buttons-colvisRestore {
 body.dt-view div.dt-button-collection.fixed > :last-child {
     max-height: calc(70vh - 1rem);
 }
+
+/* Record "Details:" modal in the Table view's list/responsive mode: the close ✕
+   sits on top of the print button. The bs5 Responsive integration replaces
+   Responsive's own dialog with a Bootstrap modal (datatables.js: `_display.modal
+   = function (options) {...}`), so the markup is
+       <div class="modal fade dtr-bs-modal"><div class="modal-dialog">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h4 class="modal-title">Details: <div class="dt-buttons btn-group">
+                 copy print</div></h4>
+             <button class="btn-close" data-bs-dismiss="modal"></button>
+   — i.e. NOT the div.dtr-modal / div.dtr-modal-close layout that ships in
+   datatables.css (that path is only the fallback for when $.fn.modal is
+   missing, and CKAN 2.11's Bootstrap 5 bundle defines it).
+   Two things then compete for the header's top-right corner: the .btn-close
+   rule above, which this theme pins with `position: absolute; top: 12px;
+   right: 15px` (needed for the Data API modal, where api-info.js appends the ✕
+   after the <h3> and a float would drop it below the heading), and the
+   copy/print buttons that datatablesview.js injects into the title, which
+   datatables_view.css floats right along with every other .dt-buttons. The ✕
+   therefore owns the rightmost 39px (15 + 24 wide) while the button group's
+   right edge stops at the title's content edge, 15px in — so the ✕ paints over
+   the print button. Reserve that corner in this modal only, leaving the shared
+   .btn-close positioning (and the Data API modal) untouched. */
+/* 36px: the title's content edge is already 15px in (.modal-header padding), so
+   the floated group's right edge lands 51px from the header edge -- 12px clear
+   of the ✕, which reaches 39px in. */
+div.dtr-bs-modal .modal-header .modal-title {
+    padding-right: 36px;
+}
