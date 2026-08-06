@@ -9,11 +9,13 @@
 {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
 
 {% block resource_additional_information_inner %}
-  {% if res.datastore_active %}
-    {% block resource_data_dictionary %}
-      {{ super() }}
-    {% endblock %}
-  {% endif %}
+  {#- Suppress the Data Dictionary section. The block must be redefined EMPTY here
+      rather than deleted: this template is the child-most in the resource_read
+      chain (iaea -> datastore -> xloader -> iaea -> validation -> core), so an
+      empty definition wins, but removing it entirely would let datastore's
+      definition -- which renders the dictionary snippet and never calls super()
+      -- take over again. The dictionary stays editable at /dictionary. -#}
+  {% block resource_data_dictionary %}{% endblock %}
 
   <div class="module-content">
     {%- block additional_info_heading -%}<h2>{{ _('Additional Information') }}</h2>{%- endblock -%}
