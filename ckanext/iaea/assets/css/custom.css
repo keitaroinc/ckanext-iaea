@@ -206,12 +206,18 @@
    plugin outranks this theme in CKAN's template search path, so it cannot be
    removed via a template override from here; hide it with CSS instead. The
    dictionary renders as a .module-content whose direct children include the
-   per-field .accordion elements (built by datastore/snippets/dictionary_view.html);
-   the only other .accordion in the app (the admin data-type page) is not wrapped
-   in a .module-content, so the "> .accordion" child combinator targets the data
-   dictionary alone. The dictionary remains editable on the dedicated /dictionary
-   page. */
-.module-content:has(> .accordion) {
+   per-field .accordion elements (built by datastore/snippets/dictionary_view.html).
+   Scope this tightly: the admin trash page (admin/snippets/data_type.html) also
+   renders .accordion elements as direct children of a .module-content -- the one
+   core page.html wraps around {% block primary_content_inner %} -- so a bare
+   ".module-content:has(> .accordion)" blanks the whole trash page, Purge all form
+   included. Two things distinguish the dictionary: its .module-content is a direct
+   child of a <section class="module"> (the trash one sits in page.html's
+   <article class="module">), and it opens with an <h2>Data Dictionary</h2> heading
+   immediately before the accordions (the trash one opens with a <form>). Require
+   both. The dictionary remains editable on the dedicated /dictionary page, which
+   nests .accordion-item inside a <form> and never matched this rule. */
+section.module > .module-content:has(> h2 + .accordion) {
     display: none;
 }
 
