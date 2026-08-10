@@ -15,8 +15,12 @@
 {% endmacro %}
 
 {% set fields = h.resource_view_get_fields(resource) %}
+{# Only tabular (DataStore-backed) resources have filterable fields, so skip
+   this for GeoJSON/PDF/image/etc. views where the select would just be empty. #}
+{% if fields %}
 <div data-module = "resource-view-suggested-filter" data-module-resource-id = "{{ resource['id'] }}">
   {{
     suggestedFilter('Suggested filter fields', label=_('Suggested filter fields'), fields=fields, suggested_filter_fields=data.suggested_filter_fields, error=errors, classes=[""])
   }}
 </div>
+{% endif %}
