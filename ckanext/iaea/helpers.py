@@ -76,8 +76,46 @@ def get_main_organization():
 def is_rtl_language():
     return lang() in config.get('ckan.i18n.rtl_languages', 'he ar fa_IR').split()
 
+
+# Raw resource-dict fields we allow into the resource "Additional Information"
+# table, mapped to their display labels. Keys are as returned by CKAN's core
+# format_resource_items(), i.e. underscores already replaced with spaces.
+RESOURCE_ITEM_LABELS = {
+    'package id': 'Package id',
+    'id': 'Resource id',
+    'resource id': 'Resource id',
+    'size': 'Size',
+}
+
+
+def format_resource_items(items):
+    '''Overrides the core helper of the same name to whitelist and relabel the
+    raw resource fields shown in the resource "Additional Information" table.
+
+    This deliberately lives in the plugin rather than in the theme's
+    scheming/package/resource_read.html, because that template only wins when
+    ckanext-iaea outranks ckanext-scheming in `ckan.plugins` (earlier in the
+    list == higher template precedence). When it loses, ckanext-scheming's copy
+    renders instead and any whitelist kept in our template is bypassed, which
+    silently drops Package id / Resource id / Size from the page. Every copy of
+    resource_read.html -- core's, scheming's and ours -- feeds its rows from
+    this helper, so filtering here holds regardless of which one renders.
+
+    Callers other than those three templates: none (checked across ckan and all
+    bundled extensions).
+    '''
+    output = []
+    for key, value in h.format_resource_items(items):
+        label = RESOURCE_ITEM_LABELS.get(key)
+        if label:
+            # Translate at call time so the active request locale is used.
+            output.append((tk._(label), value))
+    return output
+
+
 def get_helpers():
     return {
         "iaea_ga_header": googleanalytics_header,
         'iaea_get_available_organizations': get_available_organizations,
+        'format_resource_items': format_resource_items,
     }

@@ -77,18 +77,15 @@
           {%- endfor -%}
         {%- endblock -%}
         {%- block resource_more_items -%}
-          {#- Whitelist only these raw resource-dict fields, relabel them, and
-              render as plain rows (no toggle-more) so no "Show more" button appears. -#}
-          {%- set item_labels = {
-            'package id': _('Package id'),
-            'id': _('Resource id'),
-            'resource id': _('Resource id'),
-            'size': _('Size'),
-          } -%}
+          {#- The whitelist and the labels now live in ckanext.iaea.helpers
+              .format_resource_items, which overrides the core helper. Keeping
+              them there rather than here means they still apply when this
+              template loses to ckanext-scheming's copy of it (which happens
+              whenever scheming_datasets is listed before iaea in ckan.plugins).
+              Rows are plain -- no toggle-more class -- so no "Show more"
+              button appears when our template is the one that renders. -#}
           {% for key, value in h.format_resource_items(res.items()) %}
-            {% if key in item_labels %}
-              <tr><th scope="row">{{ item_labels[key] }}</th><td>{{ value }}</td></tr>
-            {% endif %}
+            <tr><th scope="row">{{ key }}</th><td>{{ value }}</td></tr>
           {% endfor %}
         {%- endblock -%}
       </tbody>
