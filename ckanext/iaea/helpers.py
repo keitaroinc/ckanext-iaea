@@ -80,10 +80,13 @@ def is_rtl_language():
 # Raw resource-dict fields we allow into the resource "Additional Information"
 # table, mapped to their display labels. Keys are as returned by CKAN's core
 # format_resource_items(), i.e. underscores already replaced with spaces.
+# 'resource id' is deliberately absent: resources carry a redundant
+# free-form `resource_id` extra alongside the canonical `id`, holding the same
+# value, and mapping both to 'Resource id' rendered the row twice. `id` is
+# always present on a resource dict, so keying on it alone is sufficient.
 RESOURCE_ITEM_LABELS = {
     'package id': 'Package id',
     'id': 'Resource id',
-    'resource id': 'Resource id',
     'size': 'Size',
 }
 
