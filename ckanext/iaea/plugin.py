@@ -123,14 +123,30 @@ class IaeaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm,
         toolkit.add_public_directory(config_, "public")
         toolkit.add_resource("assets", "iaea")
 
-        # Move iaea's template directory to the front so it takes precedence
-        # over plugins registered earlier (e.g. reclineview). CKAN appends
-        # paths to extra_template_paths in plugin load order, so the last
-        # entry (ours) would otherwise lose to earlier plugins.
-        paths = config_.get('extra_template_paths', '').split(',')
-        paths = [p for p in paths if p]
-        if paths:
-            config_['extra_template_paths'] = paths[-1] + ',' + ','.join(paths[:-1])
+        # Templates in "templates_priority" outrank EVERY plugin's templates,
+        # including plugins listed before iaea in ckan.plugins.
+        #
+        # Why this is needed: IConfigurer sets _reverse_iteration_order = True
+        # (ckan/plugins/interfaces.py:786), so update_config runs last-plugin
+        # first, and each call prepends to plugin_template_paths
+        # (toolkit.py:206-210). The two cancel out, leaving that list in
+        # ckan.plugins order -- first-listed plugin wins. iaea sits after
+        # datastore/xloader/dataexplorer there, so its normal "templates" dir
+        # loses to them, and it cannot fix that here either: iaea's
+        # update_config runs BEFORE theirs, so anything it moves to the front
+        # simply gets prepended over afterwards.
+        #
+        # extra_template_paths is the way out. It is read once after the whole
+        # IConfigurer loop and prepended ahead of plugin_template_paths
+        # (ckan/config/environment.py:209-212), so it is immune to plugin
+        # ordering. Keep this directory limited to templates that must beat
+        # another plugin -- everything else belongs in "templates".
+        priority_path = os.path.join(os.path.dirname(__file__),
+                                     'templates_priority')
+        paths = [p for p in config_.get('extra_template_paths', '').split(',')
+                 if p]
+        if priority_path not in paths:
+            config_['extra_template_paths'] = ','.join([priority_path] + paths)
 
     # ITemplateHelpers
         
