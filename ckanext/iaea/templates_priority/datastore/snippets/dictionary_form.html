@@ -1,0 +1,47 @@
+{% ckan_extends %}
+
+{% import 'macros/form.html' as form %}
+
+{#
+  Widen the Data Dictionary "Type Override" list beyond core datastore's
+  text/numeric/timestamp.
+
+  How this works: the value is stored verbatim in the column's `info` dict and
+  read back by xloader. On the direct-COPY path (loader.py:355-357, used here
+  because ckanext.xloader.use_type_guessing is False) it is passed straight to
+  datastore_create with no whitelist, and datastore validates it with
+  `cast(:type as regtype)` (postgres.py:769) -- so any real PostgreSQL type is
+  accepted and PostgreSQL casts the CSV text during COPY.
+
+  Caveats before adding to this list:
+
+  * Overrides apply on the NEXT xloader run, not on save. Re-run "Upload to
+    DataStore"; the table is dropped and recreated when field types changed.
+  * If any single cell fails to cast, the whole COPY fails and jobs.py:355
+    falls back to the tabulator path, which only honours text/numeric/timestamp
+    and so SILENTLY reverts the column to its guessed type. The only trace is a
+    warning in the xloader log.
+  * Consumers branch on the raw PostgreSQL typname reported by datastore_search,
+    and several only recognise 'numeric'. Notably datatablesview.js:316 sorts
+    anything else as a string, and ckanext-visualize's getChartType()
+    (visualize-data.js:154) returns undefined for unrecognised types, which
+    stops the chart rendering. int4 is used rather than int8 because
+    ckanext-dataexplorer's datastore_field_types (plugin.py:158) lists int4 only.
+
+  Note the option dicts use 'text' for the label -- macros/form/select.html:46
+  renders `option.text or option.value`, so core's 'name' key never displays.
+#}
+{% block datapusher_xloader_fields %}
+  {{ form.select('info__' ~ position ~ '__type_override',
+    label=_('Type Override'), options=[
+    {'value': '', 'text': ''},
+    {'value': 'text', 'text': _('Text')},
+    {'value': 'numeric', 'text': _('Number (decimal)')},
+    {'value': 'int4', 'text': _('Whole number')},
+    {'value': 'bool', 'text': _('True / false')},
+    {'value': 'date', 'text': _('Date')},
+    {'value': 'timestamp', 'text': _('Date and time')},
+    {'value': 'timestamptz', 'text': _('Date and time with time zone')},
+    {'value': 'jsonb', 'text': _('JSON')},
+    ], selected=field.get('info', {}).get('type_override', '')) }}
+{% endblock %}
