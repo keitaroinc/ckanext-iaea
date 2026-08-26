@@ -25,8 +25,7 @@
     and several only recognise 'numeric'. Notably datatablesview.js:316 sorts
     anything else as a string, and ckanext-visualize's getChartType()
     (visualize-data.js:154) returns undefined for unrecognised types, which
-    stops the chart rendering. int4 is used rather than int8 because
-    ckanext-dataexplorer's datastore_field_types (plugin.py:158) lists int4 only.
+    stops the chart rendering.
 
   Note the option dicts use 'text' for the label -- macros/form/select.html:46
   renders `option.text or option.value`, so core's 'name' key never displays.
@@ -35,13 +34,9 @@
   {{ form.select('info__' ~ position ~ '__type_override',
     label=_('Type Override'), options=[
     {'value': '', 'text': ''},
-    {'value': 'text', 'text': _('Text')},
-    {'value': 'numeric', 'text': _('Number (decimal)')},
-    {'value': 'int4', 'text': _('Whole number')},
-    {'value': 'bool', 'text': _('True / false')},
-    {'value': 'date', 'text': _('Date')},
-    {'value': 'timestamp', 'text': _('Date and time')},
-    {'value': 'timestamptz', 'text': _('Date and time with time zone')},
-    {'value': 'jsonb', 'text': _('JSON')},
+    {'value': 'text', 'text': _('text')},
+    {'value': 'numeric', 'text': _('numeric')},
+    {'value': 'date', 'text': _('date')},
+    {'value': 'timestamp', 'text': _('timestamp')},
     ], selected=field.get('info', {}).get('type_override', '')) }}
 {% endblock %}
