@@ -31,3 +31,12 @@ rtl-css:
   output: ckanext-iaea/%(version)s-rtl.css
   contents:
     - css/rtl.css
+
+datatables-column-keys-js:
+  filter: rjsmin
+  output: ckanext-iaea/%(version)s-datatables-column-keys.js
+  contents:
+    - js/datatables-column-keys.js
+  extra:
+    preload:
+      - ckanext-datatablesview/main-js
