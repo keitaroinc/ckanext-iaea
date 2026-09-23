@@ -515,3 +515,53 @@ div.dtr-bs-modal .modal-header .modal-title {
 .table-toggle-less .toggle-more {
     display: table-row !important;
 }
+/* Resource format badges (dataset list, resource list).
+   iaea.css colours formats via .label[data-format], the CKAN 2.9 markup; 2.11's
+   core snippets render <span|a class="badge" data-format="...">, so those rules
+   never match and every format fell back to the grey BS3 .badge. Only the geo
+   formats were coloured, by ckanext-geoview's own .badge[data-format] rules.
+   Same palette as the .label rules. The json rule skips geojson so it cannot
+   override geoview's colour whichever stylesheet happens to load last. */
+.badge[data-format="html"],
+.badge[data-format*="html"] {
+    background-color: #55a1ce;
+}
+.badge[data-format="json"],
+.badge[data-format*="json"]:not([data-format*="geojson"]) {
+    background-color: #ef7100;
+}
+.badge[data-format="xml"],
+.badge[data-format*="xml"] {
+    background-color: #ef7100;
+}
+.badge[data-format="text"],
+.badge[data-format*="text"] {
+    background-color: #74cbec;
+}
+.badge[data-format="csv"],
+.badge[data-format*="csv"] {
+    background-color: #dfb100;
+}
+.badge[data-format="xls"],
+.badge[data-format*="xls"] {
+    background-color: #2db55d;
+}
+.badge[data-format="zip"],
+.badge[data-format*="zip"] {
+    background-color: #686868;
+}
+.badge[data-format="api"],
+.badge[data-format*="api"] {
+    background-color: #ec96be;
+}
+.badge[data-format="pdf"],
+.badge[data-format*="pdf"] {
+    background-color: #e0051e;
+}
+.badge[data-format="rdf"],
+.badge[data-format*="rdf"],
+.badge[data-format*="nquad"],
+.badge[data-format*="ntriples"],
+.badge[data-format*="turtle"] {
+    background-color: #0b4498;
+}
