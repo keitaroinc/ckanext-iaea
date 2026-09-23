@@ -249,6 +249,17 @@
     padding: 0;
 }
 
+/* Same collapse on the bare embed page (dataset_resource.view, used by the
+   dataset page's featured-view iframe and the Fullscreen link): there the chart
+   div is a direct child of <body> with none of the wrappers above. Size it to
+   the viewport (minus the snapshot row) so it fits the 550px featured iframe
+   without scrolling and fills the window when opened fullscreen. */
+body > div.chart-container {
+    height: calc(100vh - 60px);
+    min-height: 300px;
+    padding: 0;
+}
+
 /* ckanext-charts puts the snapshot button in ".chart-control mt-2" directly
    after the chart div — 8px, which is not enough separation from a Plotly plot
    that draws its axis title on its bottom edge. Give the control row real
